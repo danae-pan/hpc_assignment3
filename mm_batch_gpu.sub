@@ -27,7 +27,7 @@ SIZES="100 200 500 1000 2000 5000"
 
 # define the method type in TYPE
 #
-TYPE="mnk_offload"
+TYPE="mkn_omp"
 
 # enable(1)/disable(0) result checking
 export MATMULT_COMPARE=0
