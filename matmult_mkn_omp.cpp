@@ -15,7 +15,7 @@ extern "C" {
             }
         }
         double end = omp_get_wtime();
-        printf("Execution time %f", end - start);
+        printf("Execution time %f\n", end - start);
     }
 
 

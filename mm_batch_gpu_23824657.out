@@ -1,0 +1,94 @@
+mkn_omp, 1, 100, 0.000440, 4545.45
+mkn_omp, 1, 200, 0.003882, 4121.58
+mkn_omp, 1, 500, 0.112039, 2231.36
+mkn_omp, 1, 1000, 0.922793, 2167.33
+mkn_omp, 1, 2000, 8.219578, 1946.57
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23824657: <mm_batch_gpu> in cluster <dcc> Exited
+
+Job <mm_batch_gpu> was submitted from host <n-62-11-46> by user <s230274> in cluster <dcc> at Wed Jan 22 16:44:18 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Wed Jan 22 16:44:25 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Wed Jan 22 16:44:25 2025
+Terminated at Wed Jan 22 16:44:57 2025
+Results reported at Wed Jan 22 16:44:57 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# 02614 - High-Performance Computing, January 2024
+# Batch script to run matmult on a dedicated GPU server in the hpcintrogpu queue
+
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32                      
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# Define the executable name
+EXECUTABLE=matmult_c.nvc++
+
+# Define problem sizes
+SIZES="100 200 500 1000 2000 5000"
+
+# Define computation methods
+TYPES="mkn_omp lib"
+
+# Define number of threads
+THREADS="1 2 4 8 16"
+
+# Enable (1) / Disable (0) result checking
+export MATMULT_COMPARE=0
+
+# Load CUDA libraries
+module load nvhpc/24.11
+
+# Output file for results
+RESULTS_FILE="performance_results.txt"
+
+# Clear the results file before writing new data
+echo "Method, Threads, Size, Execution Time (s), MFLOPS" > $RESULTS_FILE
+
+# Run the performance tests
+for T in $TYPES; do
+    for N in $THREADS; do
+        export OMP_NUM_THREADS=$N  # Set number of OpenMP threads
+        for S in $SIZES; do
+            # Run the executable and capture the execution time
+            OUTPUT=$(./$EXECUTABLE $T $S $S $S)
+            EXEC_TIME=$(echo "$OUTPUT" | grep "Execution time" | sed 's/[^0-9.]//g' | tail -n1)  # Extract time from output
+
+            # Compute MFLOPS (Floating-Point Operations per Second)
+            MFLOPS=$(echo "scale=2; (2 * $S * $S * $S) / ($EXEC_TIME * 1000000)" | bc)
+
+            # Print and save results
+
+(... more ...)
+------------------------------------------------------------
+
+TERM_OWNER: job killed by owner.
+Exited with exit code 130.
+
+Resource usage summary:
+
+    CPU time :                                   34.00 sec.
+    Max Memory :                                 101 MB
+    Average Memory :                             90.33 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65435.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   34 sec.
+    Turnaround time :                            39 sec.
+
+The output (if any) is above this job summary.
+
