@@ -3,7 +3,7 @@
 extern "C" {
     #include <omp.h>
     
-    void matmult_mkn(int m,int n,int k,double **A,double **B,double **C) {
+    void matmult_mkn_omp(int m,int n,int k,double **A,double **B,double **C) {
         double start = omp_get_wtime();
         #pragma omp parallel for 
         for(int row = 0; row < m; row++) {
