@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <omp.h>
+#include <math.h>
 
 extern "C"
 {
@@ -70,8 +71,13 @@ void initialize_offload(int m, int n, int k, double **A, double **B, double **C,
 // Function to finalize and retrieve results from GPU (D2H)
 void finalize_offload(int m, int n, int k, double **A, double **B, double **C, double *d2h_time)
 {
-    double start_D2H = omp_get_wtime();
 
+    double start_D2H = omp_get_wtime();
+#pragma omp target teams distribute parallel for
+    for (int i = 0; i < 1; i++)
+    {
+        // Do nothing, just a dummy iteration to wake up the GPU
+    }
 // Transfer results back to host
 #pragma omp target exit data map(from : C[0 : m][0 : n])
 
@@ -154,94 +160,14 @@ extern "C"
     }
 }
 
-#define _BLOCK_SIZE 5  // Ensure compile-time constant
-#define _UNROLL_FACTOR 8  // Try different unroll factors (e.g., 4, 8, 16)
+#define _BLOCK_SIZE 2
+#define _UNROLL_FACTOR 8 // Try different unroll factors (e.g., 4, 8, 16)
 
-extern "C" {
-void matmult_blk_offload(int m, int n, int k, double **A, double **B, double **C) {
-    
-    double h2d_time, d2h_time, kernel_time;
-
-    // Perform H2D transfer
-    initialize_offload(m, n, k, A, B, C, &h2d_time);
-
-    // Start Kernel Execution Timing
-  double start_kernel = omp_get_wtime();
- #pragma omp target teams distribute parallel for \
-        num_teams(min(m / _BLOCK_SIZE, 256)) thread_limit(128)
-    for (int i1 = 0; i1 < m; i1 += _BLOCK_SIZE) {
-        for (int j = 0; j < n; j++) {
-            
-            double temp_sum[_BLOCK_SIZE] = {0};
-            if (i1 + _BLOCK_SIZE <= m) {  // Fully blocked case
-                // Fully unroll the loop over `k`
-                //#pragma unroll
-               
-                for (int l = 0; l < k; l++) {
-                    //#pragma omp simd
-                    for (int i2 = 0; i2 < _BLOCK_SIZE; i2++) {
-                        temp_sum[i2] += A[i1 + i2][l] * B[l][j];
-                    }
-                }
-
-                // Store results back to `C`
-                //#pragma omp simd
-                for (int i2 = 0; i2 < _BLOCK_SIZE; i2++) {
-                    C[i1 + i2][j] = temp_sum[i2];
-                }
-
-            } else {  // Edge case for remainder
-                int remainder = m - i1;
-
-                // Fully unroll `k`
-                //#pragma unroll
-                for (int l = 0; l < k; l++) {
-                    #pragma omp simd
-                    for (int i2 = 0; i2 < remainder; i2++) {
-                        temp_sum[i2] += A[i1 + i2][l] * B[l][j];
-                    }
-                }
-
-                // #pragma omp simd
-                for (int i2 = 0; i2 < remainder; i2++) {
-                    C[i1 + i2][j] = temp_sum[i2];
-                }
-            }
-        }
-    }
-    #pragma omp taskwait
-    double end_kernel = omp_get_wtime();
-    kernel_time = end_kernel - start_kernel;
-
-    // Perform D2H transfer
-    finalize_offload(m, n, k, A, B, C, &d2h_time);
-
-    // ✅ Ensure the print happens only once
-    #pragma omp master
-    {
-        #pragma omp flush
-        printf("blk_offload, %d, %f, %f, %f\n", m, h2d_time, kernel_time, d2h_time);
-    }
-}
-}
-
-
-
-
-#define SLABS 2 // Number of slabs (must evenly divide m)
-
-// OpenMP Asynchronous Offload
 extern "C"
 {
-    void matmult_asy_offload(int m, int n, int k, double **A, double **B, double **C)
+    void matmult_blk_offload(int m, int n, int k, double **A, double **B, double **C)
     {
-        if (m % SLABS != 0)
-        {
-            printf("Error: m (%d) must be divisible by SLABS (%d)!\n", m, SLABS);
-            return;
-        }
 
-        int slab_size = m / SLABS; // Compute slab size
         double h2d_time, d2h_time, kernel_time;
 
         // Perform H2D transfer
@@ -249,36 +175,58 @@ extern "C"
 
         // Start Kernel Execution Timing
         double start_kernel = omp_get_wtime();
-
-#pragma omp parallel for
-        for (int s = 0; s < SLABS; ++s)
-        {
-            int start = s * slab_size;
-            int length = slab_size;
-
-#pragma omp target update to(A[start : length][0 : k]) nowait depend(out : A)
-
 #pragma omp target teams distribute parallel for collapse(2) \
-    num_teams(min(m, 256)) thread_limit(128)                 \
-    map(to : A[start : length][0 : k])                       \
-    map(tofrom : C[start : length][0 : n])                   \
-    depend(in : A) depend(out : C) nowait
-            for (int i = start; i < start + length; i++)
+    num_teams(min(m / _BLOCK_SIZE, 256)) thread_limit(128)
+        for (int i1 = 0; i1 < m; i1 += _BLOCK_SIZE)
+        {
+            for (int j = 0; j < n; j++)
             {
-                for (int j = 0; j < n; j++)
-                {
-                    double sum = 0.0;
+
+                double temp_sum[_BLOCK_SIZE] = {0};
+                if (i1 + _BLOCK_SIZE <= m)
+                { // Fully blocked case
+                    // Fully unroll the loop over `k`
+                    // #pragma unroll
+
                     for (int l = 0; l < k; l++)
                     {
-                        sum += A[i][l] * B[l][j];
+                        // #pragma omp simd
+                        for (int i2 = 0; i2 < _BLOCK_SIZE; i2++)
+                        {
+                            temp_sum[i2] += A[i1 + i2][l] * B[l][j];
+                        }
                     }
-                    C[i][j] = sum;
+
+                    // Store results back to `C`
+                    // #pragma omp simd
+                    for (int i2 = 0; i2 < _BLOCK_SIZE; i2++)
+                    {
+                        C[i1 + i2][j] = temp_sum[i2];
+                    }
+                }
+                else
+                { // Edge case for remainder
+                    int remainder = m - i1;
+
+                    // Fully unroll `k`
+                    // #pragma unroll
+                    for (int l = 0; l < k; l++)
+                    {
+                    //#pragma omp simd
+                        for (int i2 = 0; i2 < remainder; i2++)
+                        {
+                            temp_sum[i2] += A[i1 + i2][l] * B[l][j];
+                        }
+                    }
+
+                    // #pragma omp simd
+                    for (int i2 = 0; i2 < remainder; i2++)
+                    {
+                        C[i1 + i2][j] = temp_sum[i2];
+                    }
                 }
             }
-
-#pragma omp target update from(C[start : length][0 : n]) depend(in : C) nowait
         }
-
 #pragma omp taskwait
         double end_kernel = omp_get_wtime();
         kernel_time = end_kernel - start_kernel;
@@ -286,9 +234,110 @@ extern "C"
         // Perform D2H transfer
         finalize_offload(m, n, k, A, B, C, &d2h_time);
 
+// ✅ Ensure the print happens only once
 #pragma omp master
         {
 #pragma omp flush
+            printf("blk_offload, %d, %f, %f, %f\n", m, h2d_time, kernel_time, d2h_time);
+        }
+    }
+}
+#define SLABS 2 // Number of slabs (must evenly divide m)
+
+// OpenMP Asynchronous Offload
+extern "C"
+{
+    void matmult_asy_offload(int m, int n, int k, double **A, double **B, double **C)
+    {
+        
+        int slab_size = m / SLABS; // Compute slab size
+        double h2d_time, d2h_time, kernel_time;
+
+        // 🚀 Transfer B once (all slabs use it)
+        double start_H2D = omp_get_wtime();
+        #pragma omp target enter data map(to: B[0:k][0:n])
+        h2d_time = omp_get_wtime() - start_H2D;
+
+        // 🚀 Start Kernel Execution Timing
+        double start_kernel = omp_get_wtime();
+
+        // 🔄 Process slabs asynchronously
+        #pragma omp parallel for
+        for (int s = 0; s < SLABS; ++s)
+        {
+            int start = s * slab_size;
+
+            // 🚀 Transfer slab A and allocate C asynchronously
+            #pragma omp target enter data map(to: A[start:slab_size][0:k]) map(alloc: C[start:slab_size][0:n])
+
+            // 🚀 Compute Slab (Similar to `blk_offload`)
+            #pragma omp target teams distribute parallel for collapse(2) \
+                num_teams(min(slab_size, 256)) thread_limit(128)      \
+                depend(in: A, B) depend(out: C) nowait
+            for (int i1 = start; i1 < start + slab_size; i1 += _BLOCK_SIZE)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    double temp_sum[_BLOCK_SIZE] = {0};
+
+                    if (i1 + _BLOCK_SIZE <= start + slab_size)
+                    { // Fully blocked case
+                        for (int l = 0; l < k; l++)
+                        {
+                            //#pragma omp simd
+                            for (int i2 = 0; i2 < _BLOCK_SIZE; i2++)
+                            {
+                                temp_sum[i2] += A[i1 + i2][l] * B[l][j];
+                            }
+                        }
+
+                        //#pragma omp simd
+                        for (int i2 = 0; i2 < _BLOCK_SIZE; i2++)
+                        {
+                            C[i1 + i2][j] = temp_sum[i2];
+                        }
+                    }
+                    else
+                    { // Edge case for remainder
+                        int remainder = (start + slab_size) - i1;
+
+                        for (int l = 0; l < k; l++)
+                        {
+                            //#pragma omp simd
+                            for (int i2 = 0; i2 < remainder; i2++)
+                            {
+                                temp_sum[i2] += A[i1 + i2][l] * B[l][j];
+                            }
+                        }
+
+                        //#pragma omp simd
+                        for (int i2 = 0; i2 < remainder; i2++)
+                        {
+                            C[i1 + i2][j] = temp_sum[i2];
+                        }
+                    }
+                }
+            }
+
+            // 📤 **Retrieve C asynchronously**
+            #pragma omp target update from(C[start:slab_size][0:n]) depend(in: C) nowait
+
+            // 🔄 Cleanup slab memory on device
+            #pragma omp target exit data map(delete: A[start:slab_size][0:k], C[start:slab_size][0:n])
+        }
+
+        #pragma omp taskwait
+        double end_kernel = omp_get_wtime();
+        kernel_time = end_kernel - start_kernel;
+
+        // 🚀 Cleanup B from device after all slabs finish
+        double start_D2H = omp_get_wtime();
+        #pragma omp target exit data map(delete: B[0:k][0:n])
+        d2h_time = omp_get_wtime() - start_D2H;
+
+        #pragma omp master
+        {
+            #pragma omp flush
             printf("asy_offload, %d, %f, %f, %f\n", m, h2d_time, kernel_time, d2h_time);
         }
     }

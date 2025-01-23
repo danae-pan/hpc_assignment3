@@ -1,0 +1,162 @@
+/zhome/97/2/198344/.lsbatch/1737668749.23851191.shell: line 1: !/bin/bash: No such file or directory
+Testing mkn_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 100, H2D: 0.001515, Kernel: 0.004152, D2H: 0.000051
+Testing mkn_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 200, H2D: 0.001624, Kernel: 0.001979, D2H: 0.000053
+Testing mkn_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 500, H2D: 0.007101, Kernel: 0.003437, D2H: 0.000116
+Testing mkn_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 1000, H2D: 0.006943, Kernel: 0.014645, D2H: 0.000237
+Testing mkn_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 2000, H2D: 0.009368, Kernel: 0.139530, D2H: 0.000792
+Testing mkn_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 5000, H2D: 0.016100, Kernel: 1.598253, D2H: 0.004459
+Testing mnk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 100, H2D: 0.001464, Kernel: 0.010134, D2H: 0.000054
+Testing mnk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 200, H2D: 0.001839, Kernel: 0.003878, D2H: 0.000054
+Testing mnk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 500, H2D: 0.010368, Kernel: 0.003194, D2H: 0.000108
+Testing mnk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 1000, H2D: 0.011581, Kernel: 0.004305, D2H: 0.000227
+Testing mnk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 2000, H2D: 0.004644, Kernel: 0.023504, D2H: 0.000749
+Testing mnk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 5000, H2D: 0.019260, Kernel: 0.424893, D2H: 0.004603
+Testing blk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, H2D: 0.001403, Kernel: 0.002075, D2H: 0.000048
+Testing blk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, H2D: 0.001599, Kernel: 0.004002, D2H: 0.000052
+Testing blk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, H2D: 0.011080, Kernel: 0.002379, D2H: 0.000106
+Testing blk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, H2D: 0.007302, Kernel: 0.007632, D2H: 0.000226
+Testing blk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, H2D: 0.003864, Kernel: 0.013411, D2H: 0.000736
+Testing blk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, H2D: 0.010633, Kernel: 0.195680, D2H: 0.004383
+Testing asy_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 100, H2D: 0.000868, Kernel: 0.007219, D2H: 0.000003
+Testing asy_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 200, H2D: 0.000879, Kernel: 0.010104, D2H: 0.000005
+Testing asy_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 500, H2D: 0.006109, Kernel: 0.003633, D2H: 0.000009
+Testing asy_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 1000, H2D: 0.007433, Kernel: 0.006676, D2H: 0.000017
+Testing asy_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 2000, H2D: 0.007034, Kernel: 0.020227, D2H: 0.000034
+Testing asy_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 5000, H2D: 0.010151, Kernel: 0.250538, D2H: 0.000085
+Results saved to offload_performance_resultsnumber2.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23851191: <mm_batch_gpu> in cluster <dcc> Done
+
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 22:45:49 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 22:45:51 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 22:45:51 2025
+Terminated at Thu Jan 23 22:48:17 2025
+Results reported at Thu Jan 23 22:48:17 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+!/bin/bash
+# Batch script to test offload methods with kernel time logging
+
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# Define method names based on README
+METHODS="mkn_offload mnk_offload blk_offload asy_offload"
+
+# Define matrix sizes
+SIZES="100 200 500 1000 2000 5000"
+
+# Output file
+RESULTS_FILE="offload_performance_resultsnumber2.csv"
+
+# Clear old results and write header
+echo "Method, Size, H2D (s), Kernel (s), D2H (s)" > "$RESULTS_FILE"
+
+# Load necessary modules
+module load nvhpc/24.11  # Adjust if needed for your HPC setup
+
+# Run tests for each method and size
+for METHOD in $METHODS; do
+    for SIZE in $SIZES; do
+        echo "Testing $METHOD with size $SIZE..."
+
+        # Run executable and capture output
+        OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" 2>&1 | tee /dev/tty)
+
+        # Extract performance metrics
+        RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+
+        # Extract H2D, Kernel, and D2H times
+        H2D=$(echo "$RESULT_LINE" | awk -F', ' '{print $3}')
+        KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $4}')
+        D2H=$(echo "$RESULT_LINE" | awk -F', ' '{print $5}')
+
+        # Default to 0 if values are missing
+        H2D=${H2D:-0}
+        KERNEL=${KERNEL:-0}
+        D2H=${D2H:-0}
+
+        # Log results
+        echo "$METHOD, $SIZE, $H2D, $KERNEL, $D2H" >> "$RESULTS_FILE"
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   179.00 sec.
+    Max Memory :                                 123 MB
+    Average Memory :                             119.33 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65413.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   165 sec.
+    Turnaround time :                            148 sec.
+
+The output (if any) is above this job summary.
+
