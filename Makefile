@@ -8,8 +8,10 @@ OPT	= -g -fast -Msafeptr -Minfo -mp=gpu -gpu=mem:separate:pinnedalloc -gpu=linei
 PIC   = -fpic -shared
 ISA	=
 PARA	= -fopenmp
-INC   = 
-LIBS	= 
+INC = 
+
+LIBS = -L/appl9/nvhpc/2024_2411/Linux_x86_64/24.11/math_libs/12.6/targets/x86_64-linux/lib -lcublas -lcublasLt
+
 
 CXXFLAGS= $(OPT) $(PIC) $(INC) $(ISA) $(PARA) $(XOPT)
 
