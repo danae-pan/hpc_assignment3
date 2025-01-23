@@ -1,0 +1,143 @@
+Testing mkn_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 100, 0, 0, 0, 
+Testing mkn_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 200, 0, 0, 0, 
+Testing mkn_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 500, 0, 0, 0, 
+Testing mkn_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 1000, 0, 0, 0, 
+Testing mkn_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 2000, 0, 0, 0, 
+Testing mkn_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 5000, 0, 0, 0, 
+Testing mnk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 100, 0, 0, 0, 
+Testing mnk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 200, 0, 0, 0, 
+Testing mnk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 500, 0, 0, 0, 
+Testing mnk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 1000, 0, 0, 0, 
+Testing mnk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 2000, 0, 0, 0, 
+Testing mnk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 5000, 0, 0, 0, 
+Testing asy_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 100, 0, 0, 0, 
+Testing asy_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 200, 0, 0, 0, 
+Testing asy_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 500, 0, 0, 0, 
+Testing asy_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 1000, 0, 0, 0, 
+Testing asy_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 2000, 0, 0, 0, 
+Testing asy_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: asy_offload, 5000, 0, 0, 0, 
+Results saved to offload_performance_results.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23826523: <NONAME> in cluster <dcc> Done
+
+Job <NONAME> was submitted from host <n-62-11-46> by user <s230274> in cluster <dcc> at Thu Jan 23 02:09:22 2025
+Job was executed on host(s) <n-62-21-98>, in queue <hpc>, as user <s230274> in cluster <dcc> at Thu Jan 23 02:09:24 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 02:09:24 2025
+Terminated at Thu Jan 23 02:09:28 2025
+Results reported at Thu Jan 23 02:09:28 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to test all offload methods
+
+# Define method names
+METHODS="mkn_offload mnk_offload asy_offload"
+
+# Define matrix sizes
+SIZES="100 200 500 1000 2000 5000"
+
+# Output file
+RESULTS_FILE="offload_performance_results.csv"
+
+# Clear old results
+echo "Method, Size, H2D (s), Kernel (s), D2H (s), CMR" > $RESULTS_FILE
+
+# Load necessary modules (adjust if required)
+module load nvhpc/24.11
+
+# Run tests for each method and size
+for METHOD in $METHODS; do
+    for SIZE in $SIZES; do
+        echo "Testing $METHOD with size $SIZE..."
+
+        # Run executable and capture output
+        OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" 2>&1 | tee /dev/tty)
+
+        # Extract H2D, Kernel, and D2H times
+        RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+
+        H2D=$(echo "$RESULT_LINE" | awk -F', ' '{print $3}')
+        KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $4}')
+        D2H=$(echo "$RESULT_LINE" | awk -F', ' '{print $5}')
+
+        # Check if values are empty, if so, set them to zero
+        H2D=${H2D:-0}
+        KERNEL=${KERNEL:-0}
+        D2H=${D2H:-0}
+
+        # Compute CMR (Compute-to-Memory Ratio)
+        CMR=$(echo "$KERNEL / ($H2D + $D2H)" | bc -l 2>/dev/null || echo "0")
+
+        # Log results
+        echo "$METHOD, $SIZE, $H2D, $KERNEL, $D2H, $CMR" >> $RESULTS_FILE
+
+        # Debugging: Print confirmation of what was saved
+        echo "Saved: $METHOD, $SIZE, $H2D, $KERNEL, $D2H, $CMR"
+    done
+done
+
+echo "Results saved to $RESULTS_FILE"
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2.04 sec.
+    Max Memory :                                 1 MB
+    Average Memory :                             1.00 MB
+    Total Requested Memory :                     1024.00 MB
+    Delta Memory :                               1023.00 MB
+    Max Swap :                                   -
+    Max Processes :                              1
+    Max Threads :                                1
+    Run time :                                   28 sec.
+    Turnaround time :                            6 sec.
+
+The output (if any) is above this job summary.
+
