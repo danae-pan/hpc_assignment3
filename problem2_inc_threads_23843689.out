@@ -1,0 +1,299 @@
+Testing mkn_offload with team size 64 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 64, 32, 0, 0
+Testing mnk_offload with team size 64 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 64, 32, 0, 0
+Testing mkn_offload with team size 64 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 64, 64, 0, 0
+Testing mnk_offload with team size 64 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 64, 64, 0, 0
+Testing mkn_offload with team size 64 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 64, 128, 0, 0
+Testing mnk_offload with team size 64 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 64, 128, 0, 0
+Testing mkn_offload with team size 64 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 64, 256, 0, 0
+Testing mnk_offload with team size 64 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 64, 256, 0, 0
+Testing mkn_offload with team size 64 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 64, 512, 0, 0
+Testing mnk_offload with team size 64 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 64, 512, 0, 0
+Testing mkn_offload with team size 128 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 128, 32, 0, 0
+Testing mnk_offload with team size 128 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 128, 32, 0, 0
+Testing mkn_offload with team size 128 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 128, 64, 0, 0
+Testing mnk_offload with team size 128 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 128, 64, 0, 0
+Testing mkn_offload with team size 128 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 128, 128, 0, 0
+Testing mnk_offload with team size 128 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 128, 128, 0, 0
+Testing mkn_offload with team size 128 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 128, 256, 0, 0
+Testing mnk_offload with team size 128 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 128, 256, 0, 0
+Testing mkn_offload with team size 128 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 128, 512, 0, 0
+Testing mnk_offload with team size 128 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 128, 512, 0, 0
+Testing mkn_offload with team size 256 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 256, 32, 0, 0
+Testing mnk_offload with team size 256 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 256, 32, 0, 0
+Testing mkn_offload with team size 256 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 256, 64, 0, 0
+Testing mnk_offload with team size 256 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 256, 64, 0, 0
+Testing mkn_offload with team size 256 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 256, 128, 0, 0
+Testing mnk_offload with team size 256 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 256, 128, 0, 0
+Testing mkn_offload with team size 256 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 256, 256, 0, 0
+Testing mnk_offload with team size 256 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 256, 256, 0, 0
+Testing mkn_offload with team size 256 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 256, 512, 0, 0
+Testing mnk_offload with team size 256 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 256, 512, 0, 0
+Testing mkn_offload with team size 512 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 512, 32, 0, 0
+Testing mnk_offload with team size 512 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 512, 32, 0, 0
+Testing mkn_offload with team size 512 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 512, 64, 0, 0
+Testing mnk_offload with team size 512 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 512, 64, 0, 0
+Testing mkn_offload with team size 512 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 512, 128, 0, 0
+Testing mnk_offload with team size 512 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 512, 128, 0, 0
+Testing mkn_offload with team size 512 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 512, 256, 0, 0
+Testing mnk_offload with team size 512 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 512, 256, 0, 0
+Testing mkn_offload with team size 512 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 512, 512, 0, 0
+Testing mnk_offload with team size 512 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 512, 512, 0, 0
+Testing mkn_offload with team size 1024 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 1024, 32, 0, 0
+Testing mnk_offload with team size 1024 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 1024, 32, 0, 0
+Testing mkn_offload with team size 1024 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 1024, 64, 0, 0
+Testing mnk_offload with team size 1024 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 1024, 64, 0, 0
+Testing mkn_offload with team size 1024 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 1024, 128, 0, 0
+Testing mnk_offload with team size 1024 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 1024, 128, 0, 0
+Testing mkn_offload with team size 1024 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 1024, 256, 0, 0
+Testing mnk_offload with team size 1024 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 1024, 256, 0, 0
+Testing mkn_offload with team size 1024 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 1024, 512, 0, 0
+Testing mnk_offload with team size 1024 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 1024, 512, 0, 0
+Testing mkn_offload with team size 2048 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 2048, 32, 0, 0
+Testing mnk_offload with team size 2048 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 2048, 32, 0, 0
+Testing mkn_offload with team size 2048 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 2048, 64, 0, 0
+Testing mnk_offload with team size 2048 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 2048, 64, 0, 0
+Testing mkn_offload with team size 2048 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 2048, 128, 0, 0
+Testing mnk_offload with team size 2048 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 2048, 128, 0, 0
+Testing mkn_offload with team size 2048 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 2048, 256, 0, 0
+Testing mnk_offload with team size 2048 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 2048, 256, 0, 0
+Testing mkn_offload with team size 2048 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 2048, 512, 0, 0
+Testing mnk_offload with team size 2048 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 2048, 512, 0, 0
+Testing mkn_offload with team size 4096 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 4096, 32, 0, 0
+Testing mnk_offload with team size 4096 and thread limit 32...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 4096, 32, 0, 0
+Testing mkn_offload with team size 4096 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 4096, 64, 0, 0
+Testing mnk_offload with team size 4096 and thread limit 64...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 4096, 64, 0, 0
+Testing mkn_offload with team size 4096 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 4096, 128, 0, 0
+Testing mnk_offload with team size 4096 and thread limit 128...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 4096, 128, 0, 0
+Testing mkn_offload with team size 4096 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 4096, 256, 0, 0
+Testing mnk_offload with team size 4096 and thread limit 256...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 4096, 256, 0, 0
+Testing mkn_offload with team size 4096 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mkn_offload, 1000, 4096, 512, 0, 0
+Testing mnk_offload with team size 4096 and thread limit 512...
+Usage: ./matmult_c.nvc++ version m k n [bs]
+Saved: mnk_offload, 1000, 4096, 512, 0, 0
+Results saved to team_thread_performance_results.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23843689: <problem2_inc_threads> in cluster <dcc> Done
+
+Job <problem2_inc_threads> was submitted from host <n-62-12-81> by user <s182821> in cluster <dcc> at Thu Jan 23 14:11:06 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s182821> in cluster <dcc> at Thu Jan 23 14:11:44 2025
+</zhome/4c/5/135583> was used as the home directory.
+</zhome/4c/5/135583/assignment_3/repo/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 14:11:44 2025
+Terminated at Thu Jan 23 14:11:54 2025
+Results reported at Thu Jan 23 14:11:54 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to test different team sizes and thread numbers for mkn_offload and mnk_offload
+
+#BSUB -J problem2_inc_threads
+#BSUB -o problem2_inc_threads_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# Define methods to test
+METHODS="mkn_offload mnk_offload"
+
+# Define matrix size (fixed for this experiment)
+MATRIX_SIZE=1000
+
+# Define team sizes and thread limits to experiment with
+TEAM_SIZES="64 128 256 512 1024 2048 4096"
+THREAD_SIZES="32 64 128 256 512"
+
+# Output file
+RESULTS_FILE="team_thread_performance_results.csv"
+
+# Clear old results
+echo "Method, Matrix Size, Teams, Threads, Kernel (s), GFLOPS/s" > $RESULTS_FILE
+
+# Load necessary modules (adjust if required)
+module load nvhpc/24.11
+
+# Run tests for MKN and MNK with different team and thread sizes
+for TEAM in $TEAM_SIZES; do
+    for THREAD in $THREAD_SIZES; do
+        for METHOD in $METHODS; do
+            echo "Testing $METHOD with team size $TEAM and thread limit $THREAD..."
+
+            # Run executable with team and thread limit
+            OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$MATRIX_SIZE" "$MATRIX_SIZE" "$MATRIX_SIZE" "$TEAM" "$THREAD")
+
+            # Extract Kernel time
+            RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+            KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $5}')
+
+            # Check if Kernel time is empty or zero, if so, set to zero
+            KERNEL=${KERNEL:-0}
+
+            # Compute GFLOPS/s: (2 * m * n * k) / (Kernel Time * 10^9)
+            if [[ "$KERNEL" == "0" || "$KERNEL" == "" ]]; then
+                GFLOPS="0"
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   5.13 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   11 sec.
+    Turnaround time :                            48 sec.
+
+The output (if any) is above this job summary.
+
