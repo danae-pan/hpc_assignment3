@@ -1,70 +1,70 @@
 Testing mkn_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 100, 0.001564, 1.278772
+Saved: mkn_offload, 100, 0.002375, .842105
 Testing mkn_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 200, 0.001976, 8.097165
+Saved: mkn_offload, 200, 0.017784, .899685
 Testing mkn_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 500, 0.003227, 77.471335
+Saved: mkn_offload, 500, 0.002384, 104.865771
 Testing mkn_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 1000, 0.014809, 135.053008
+Saved: mkn_offload, 1000, 0.009768, 204.750204
 Testing mkn_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 2000, 0.141941, 112.722891
+Saved: mkn_offload, 2000, 0.089790, 178.193562
 Testing mkn_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 5000, 1.658987, 150.694369
+Saved: mkn_offload, 5000, 1.068175, 234.044047
 Testing mnk_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 100, 0.003419, .584966
+Saved: mnk_offload, 100, 0.004905, .407747
 Testing mnk_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 200, 0.001685, 9.495548
+Saved: mnk_offload, 200, 0.010581, 1.512144
 Testing mnk_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 500, 0.002455, 101.832993
+Saved: mnk_offload, 500, 0.002302, 108.601216
 Testing mnk_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 1000, 0.004261, 469.373386
+Saved: mnk_offload, 1000, 0.003147, 635.525897
 Testing mnk_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 2000, 0.024080, 664.451827
+Saved: mnk_offload, 2000, 0.016689, 958.715321
 Testing mnk_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 5000, 0.434145, 575.844475
+Saved: mnk_offload, 5000, 0.323195, 773.526818
 Testing asy_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 100, 0.015119, .132283
+Saved: asy_offload, 100, 0.006958, .287438
 Testing asy_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 200, 0.009630, 1.661474
+Saved: asy_offload, 200, 0.002529, 6.326611
 Testing asy_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 500, 0.023554, 10.613908
+Saved: asy_offload, 500, 0.002613, 95.675468
 Testing asy_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 1000, 0.028567, 70.010851
+Saved: asy_offload, 1000, 0.007041, 284.050560
 Testing asy_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 2000, 0.071139, 224.911792
+Saved: asy_offload, 2000, 0.046434, 344.575095
 Testing asy_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 5000, 1.386259, 180.341480
+Saved: asy_offload, 5000, 1.034136, 241.747700
 Results saved to offload_performance_results_gflops.csv
 
 ------------------------------------------------------------
 Sender: LSF System <lsfadmin@hpc.dtu.dk>
-Subject: Job 23837742: <mm_batch_gpu> in cluster <dcc> Done
+Subject: Job 23837901: <mm_batch_gpu> in cluster <dcc> Done
 
-Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 10:57:10 2025
-Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 10:57:12 2025
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 11:26:08 2025
+Job was executed on host(s) <32*n-62-12-89>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 11:26:08 2025
 </zhome/97/2/198344> was used as the home directory.
 </zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
-Started at Thu Jan 23 10:57:12 2025
-Terminated at Thu Jan 23 10:59:07 2025
-Results reported at Thu Jan 23 10:59:07 2025
+Started at Thu Jan 23 11:26:08 2025
+Terminated at Thu Jan 23 11:27:55 2025
+Results reported at Thu Jan 23 11:27:55 2025
 
 Your job looked like:
 
@@ -128,16 +128,16 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time :                                   136.00 sec.
-    Max Memory :                                 114 MB
-    Average Memory :                             114.00 MB
+    CPU time :                                   128.00 sec.
+    Max Memory :                                 116 MB
+    Average Memory :                             115.33 MB
     Total Requested Memory :                     65536.00 MB
-    Delta Memory :                               65422.00 MB
+    Delta Memory :                               65420.00 MB
     Max Swap :                                   -
     Max Processes :                              6
     Max Threads :                                11
-    Run time :                                   115 sec.
-    Turnaround time :                            117 sec.
+    Run time :                                   159 sec.
+    Turnaround time :                            107 sec.
 
 The output (if any) is above this job summary.
 

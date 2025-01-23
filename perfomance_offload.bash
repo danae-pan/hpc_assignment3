@@ -12,7 +12,7 @@
 #BSUB -gpu "num=1:mode=exclusive_process"
 
 # Define method names
-METHODS="mkn_offload mnk_offload asy_offload"
+METHODS="mkn_offload mnk_offload blk_offload asy_offload"
 
 # Define matrix sizes
 SIZES="100 200 500 1000 2000 5000"

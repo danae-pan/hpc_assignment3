@@ -44,15 +44,15 @@ for METHOD in $METHODS; do
         echo "NSYS profiling completed for $METHOD, Size $SIZE"
 
         # Run NCU profiling (memory and compute performance)
-        echo "Starting NCU profiling for $METHOD, Size $SIZE"
-        ncu -o "$NCU_FILE" \
-            --set basic \
-            --section MemoryWorkloadAnalysis \
-            --section MemoryWorkloadAnalysis_Chart \
-            --section ComputeWorkloadAnalysis \
-            ./matmult_c.nvc++ $METHOD $SIZE $SIZE $SIZE 
+        #echo "Starting NCU profiling for $METHOD, Size $SIZE"
+        #ncu -o "$NCU_FILE" \
+        #    --set basic \
+        #   --section MemoryWorkloadAnalysis \
+        #   --section MemoryWorkloadAnalysis_Chart \
+        #    --section ComputeWorkloadAnalysis \
+        #    ./matmult_c.nvc++ $METHOD $SIZE $SIZE $SIZE 
 
-        echo "NCU profiling completed for $METHOD, Size $SIZE"
+        #echo "NCU profiling completed for $METHOD, Size $SIZE"
     done
 done
 

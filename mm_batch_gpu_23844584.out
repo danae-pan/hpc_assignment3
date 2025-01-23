@@ -1,70 +1,88 @@
 Testing mkn_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 100, 0.001564, 1.278772
+Saved: mkn_offload, 100, 0.011055, .180913
 Testing mkn_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 200, 0.001976, 8.097165
+Saved: mkn_offload, 200, 0.011094, 1.442221
 Testing mkn_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 500, 0.003227, 77.471335
+Saved: mkn_offload, 500, 0.009015, 27.731558
 Testing mkn_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 1000, 0.014809, 135.053008
+Saved: mkn_offload, 1000, 0.012723, 157.195629
 Testing mkn_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 2000, 0.141941, 112.722891
+Saved: mkn_offload, 2000, 0.090228, 177.328545
 Testing mkn_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: mkn_offload, 5000, 1.658987, 150.694369
+Saved: mkn_offload, 5000, 1.097059, 227.882000
 Testing mnk_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 100, 0.003419, .584966
+Saved: mnk_offload, 100, 0.001631, 1.226241
 Testing mnk_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 200, 0.001685, 9.495548
+Saved: mnk_offload, 200, 0.007021, 2.278877
 Testing mnk_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 500, 0.002455, 101.832993
+Saved: mnk_offload, 500, 0.001912, 130.753138
 Testing mnk_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 1000, 0.004261, 469.373386
+Saved: mnk_offload, 1000, 0.003499, 571.591883
 Testing mnk_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 2000, 0.024080, 664.451827
+Saved: mnk_offload, 2000, 0.017305, 924.588269
 Testing mnk_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: mnk_offload, 5000, 0.434145, 575.844475
+Saved: mnk_offload, 5000, 0.319272, 783.031396
+Testing blk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 0, 0
+Testing blk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 0, 0
+Testing blk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 0, 0
+Testing blk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 0, 0
+Testing blk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 0, 0
+Testing blk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 0, 0
 Testing asy_offload with size 100...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 100, 0.015119, .132283
+Saved: asy_offload, 100, 0.024822, .080573
 Testing asy_offload with size 200...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 200, 0.009630, 1.661474
+Saved: asy_offload, 200, 0.008857, 1.806480
 Testing asy_offload with size 500...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 500, 0.023554, 10.613908
+Saved: asy_offload, 500, 0.002729, 91.608647
 Testing asy_offload with size 1000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 1000, 0.028567, 70.010851
+Saved: asy_offload, 1000, 0.011341, 176.351291
 Testing asy_offload with size 2000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 2000, 0.071139, 224.911792
+Saved: asy_offload, 2000, 0.019160, 835.073068
 Testing asy_offload with size 5000...
 tee: /dev/tty: No such device or address
-Saved: asy_offload, 5000, 1.386259, 180.341480
+Saved: asy_offload, 5000, 0.343234, 728.366070
 Results saved to offload_performance_results_gflops.csv
 
 ------------------------------------------------------------
 Sender: LSF System <lsfadmin@hpc.dtu.dk>
-Subject: Job 23837742: <mm_batch_gpu> in cluster <dcc> Done
+Subject: Job 23844584: <mm_batch_gpu> in cluster <dcc> Done
 
-Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 10:57:10 2025
-Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 10:57:12 2025
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 14:39:07 2025
+Job was executed on host(s) <32*n-62-12-89>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 14:40:02 2025
 </zhome/97/2/198344> was used as the home directory.
 </zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
-Started at Thu Jan 23 10:57:12 2025
-Terminated at Thu Jan 23 10:59:07 2025
-Results reported at Thu Jan 23 10:59:07 2025
+Started at Thu Jan 23 14:40:02 2025
+Terminated at Thu Jan 23 14:42:14 2025
+Results reported at Thu Jan 23 14:42:14 2025
 
 Your job looked like:
 
@@ -84,7 +102,7 @@ Your job looked like:
 #BSUB -gpu "num=1:mode=exclusive_process"
 
 # Define method names
-METHODS="mkn_offload mnk_offload asy_offload"
+METHODS="mkn_offload mnk_offload blk_offload asy_offload"
 
 # Define matrix sizes
 SIZES="100 200 500 1000 2000 5000"
@@ -128,16 +146,16 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time :                                   136.00 sec.
-    Max Memory :                                 114 MB
-    Average Memory :                             114.00 MB
+    CPU time :                                   160.00 sec.
+    Max Memory :                                 115 MB
+    Average Memory :                             109.00 MB
     Total Requested Memory :                     65536.00 MB
-    Delta Memory :                               65422.00 MB
+    Delta Memory :                               65421.00 MB
     Max Swap :                                   -
     Max Processes :                              6
     Max Threads :                                11
-    Run time :                                   115 sec.
-    Turnaround time :                            117 sec.
+    Run time :                                   132 sec.
+    Turnaround time :                            187 sec.
 
 The output (if any) is above this job summary.
 

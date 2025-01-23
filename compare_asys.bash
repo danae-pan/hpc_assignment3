@@ -1,5 +1,13 @@
 #!/bin/bash
 # Batch script to test all offload methods
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
 
 # Define method names
 METHODS="mkn_offload mnk_offload asy_offload"

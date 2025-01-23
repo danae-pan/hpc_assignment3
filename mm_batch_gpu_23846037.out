@@ -1,0 +1,161 @@
+Testing blk_offload with size 100, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 1, 0.004726, .423190
+Testing blk_offload with size 100, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 2, 0.002713, .737191
+Testing blk_offload with size 100, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 4, 0.002710, .738007
+Testing blk_offload with size 100, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 8, 0.002695, .742115
+Testing blk_offload with size 200, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 1, 0.015735, 1.016841
+Testing blk_offload with size 200, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 2, 0.009745, 1.641867
+Testing blk_offload with size 200, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 4, 0.008976, 1.782531
+Testing blk_offload with size 200, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 8, 0.004773, 3.352189
+Testing blk_offload with size 500, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 1, 0.015564, 16.062708
+Testing blk_offload with size 500, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 2, 0.016097, 15.530844
+Testing blk_offload with size 500, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 4, 0.015497, 16.132154
+Testing blk_offload with size 500, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 8, 0.015583, 16.043123
+Testing blk_offload with size 1000, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 1, 0.051236, 39.035053
+Testing blk_offload with size 1000, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 2, 0.051242, 39.030482
+Testing blk_offload with size 1000, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 4, 0.051178, 39.079291
+Testing blk_offload with size 1000, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 8, 0.051171, 39.084637
+Testing blk_offload with size 2000, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 1, 0.203054, 78.796773
+Testing blk_offload with size 2000, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 2, 0.201806, 79.284064
+Testing blk_offload with size 2000, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 4, 0.205418, 77.889960
+Testing blk_offload with size 2000, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 8, 0.201945, 79.229493
+Testing blk_offload with size 5000, elements per thread 1...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 1, 1.228326, 203.529030
+Testing blk_offload with size 5000, elements per thread 2...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 2, 1.230282, 203.205443
+Testing blk_offload with size 5000, elements per thread 4...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 4, 1.228414, 203.514450
+Testing blk_offload with size 5000, elements per thread 8...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 8, 1.228458, 203.507161
+Results saved to offload_performance_blocks_vs_elements.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23846037: <mm_batch_gpu> in cluster <dcc> Done
+
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 15:18:59 2025
+Job was executed on host(s) <32*n-62-12-89>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 15:20:38 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 15:20:38 2025
+Terminated at Thu Jan 23 15:23:05 2025
+Results reported at Thu Jan 23 15:23:05 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to vary ELEMENTS_PER_THREAD and test performance
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+#!/bin/bash
+# Batch script to test different elements per thread for blk_offload
+#!/bin/bash
+# Batch script to test varying block sizes and elements per thread for blk_offload
+
+METHOD="blk_offload"
+SIZES="100 200 500 1000 2000 5000"
+ELEMENTS="1 2 4 8"  # Number of elements computed per thread
+
+RESULTS_FILE="offload_performance_blocks_vs_elements.csv"
+
+echo "Method, Size, Elements Per Thread, Kernel (s), GFLOPS/s" > $RESULTS_FILE
+
+module load nvhpc/24.11
+
+for SIZE in $SIZES; do
+        for ELEMENT in $ELEMENTS; do
+            echo "Testing $METHOD with size $SIZE, elements per thread $ELEMENT..."
+
+            # Run executable and capture output
+            OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" "$ELEMENT" 2>&1 | tee /dev/tty)
+
+
+            # Extract Kernel time
+            RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+
+            KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $4}')
+
+            # Compute GFLOPS/s
+            if [[ "$KERNEL" == "0" || "$KERNEL" == "" ]]; then
+                GFLOPS="0"
+            else
+                GFLOPS=$(echo "scale=6; (2 * $SIZE * $SIZE * $SIZE) / ($KERNEL * 10^9)" | bc)
+            fi
+
+            # Log results
+            echo "$METHOD, $SIZE, $ELEMENT, $KERNEL, $GFLOPS" >> $RESULTS_FILE
+            echo "Saved: $METHOD, $SIZE, $ELEMENT, $KERNEL, $GFLOPS"
+        done
+done
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   176.00 sec.
+    Max Memory :                                 112 MB
+    Average Memory :                             93.33 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65424.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   149 sec.
+    Turnaround time :                            246 sec.
+
+The output (if any) is above this job summary.
+

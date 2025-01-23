@@ -1,0 +1,231 @@
+Testing blk_offload with size 100, block size 32, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 32, 1, 0, 0
+Testing blk_offload with size 100, block size 32, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 32, 2, 0, 0
+Testing blk_offload with size 100, block size 32, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 32, 4, 0, 0
+Testing blk_offload with size 100, block size 32, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 32, 8, 0, 0
+Testing blk_offload with size 100, block size 64, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 64, 1, 0, 0
+Testing blk_offload with size 100, block size 64, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 64, 2, 0, 0
+Testing blk_offload with size 100, block size 64, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 64, 4, 0, 0
+Testing blk_offload with size 100, block size 64, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 64, 8, 0, 0
+Testing blk_offload with size 100, block size 128, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 128, 1, 0, 0
+Testing blk_offload with size 100, block size 128, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 128, 2, 0, 0
+Testing blk_offload with size 100, block size 128, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 128, 4, 0, 0
+Testing blk_offload with size 100, block size 128, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 100, 128, 8, 0, 0
+Testing blk_offload with size 200, block size 32, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 32, 1, 0, 0
+Testing blk_offload with size 200, block size 32, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 32, 2, 0, 0
+Testing blk_offload with size 200, block size 32, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 32, 4, 0, 0
+Testing blk_offload with size 200, block size 32, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 32, 8, 0, 0
+Testing blk_offload with size 200, block size 64, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 64, 1, 0, 0
+Testing blk_offload with size 200, block size 64, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 64, 2, 0, 0
+Testing blk_offload with size 200, block size 64, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 64, 4, 0, 0
+Testing blk_offload with size 200, block size 64, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 64, 8, 0, 0
+Testing blk_offload with size 200, block size 128, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 128, 1, 0, 0
+Testing blk_offload with size 200, block size 128, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 128, 2, 0, 0
+Testing blk_offload with size 200, block size 128, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 128, 4, 0, 0
+Testing blk_offload with size 200, block size 128, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 200, 128, 8, 0, 0
+Testing blk_offload with size 500, block size 32, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 32, 1, 0, 0
+Testing blk_offload with size 500, block size 32, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 32, 2, 0, 0
+Testing blk_offload with size 500, block size 32, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 32, 4, 0, 0
+Testing blk_offload with size 500, block size 32, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 32, 8, 0, 0
+Testing blk_offload with size 500, block size 64, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 64, 1, 0, 0
+Testing blk_offload with size 500, block size 64, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 64, 2, 0, 0
+Testing blk_offload with size 500, block size 64, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 64, 4, 0, 0
+Testing blk_offload with size 500, block size 64, elements per thread 8...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 64, 8, 0, 0
+Testing blk_offload with size 500, block size 128, elements per thread 1...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 128, 1, 0, 0
+Testing blk_offload with size 500, block size 128, elements per thread 2...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 128, 2, 0, 0
+Testing blk_offload with size 500, block size 128, elements per thread 4...
+tee: /dev/tty: No such device or address
+Extracted Line: 
+Saved: blk_offload, 500, 128, 4, 0, 0
+Testing blk_offload with size 500, block size 128, elements per thread 8...
+tee: /dev/tty: No such device or address
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23844640: <mm_batch_gpu> in cluster <dcc> Exited
+
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 14:51:53 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 14:52:15 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 14:52:15 2025
+Terminated at Thu Jan 23 14:52:20 2025
+Results reported at Thu Jan 23 14:52:20 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to test blk_offload with different block sizes & elements per thread
+# Batch script to test all offload methods
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+METHOD="blk_offload"
+SIZES="100 200 500 1000 2000 5000"
+BLOCK_SIZES="32 64 128"
+ELEMENTS="1 2 4 8"
+
+RESULTS_FILE="offload_performance_blocks_vs_elements.csv"
+
+echo "Method, Size, Block Size, Elements Per Thread, Kernel (s), GFLOPS/s" > $RESULTS_FILE
+
+module load nvhpc/24.11
+
+for SIZE in $SIZES; do
+    for BLOCK in $BLOCK_SIZES; do
+        for ELEMENT in $ELEMENTS; do
+            echo "Testing $METHOD with size $SIZE, block size $BLOCK, elements per thread $ELEMENT..."
+
+            # Run executable and capture output
+            OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" "$BLOCK" "$ELEMENT" 2>&1 | tee /dev/tty)
+
+            # Extract Kernel time **correctly**
+            RESULT_LINE=$(echo "$OUTPUT" | grep -E "^blk_offload,")
+            
+            # Debug: Print the matched line
+            echo "Extracted Line: $RESULT_LINE"
+
+            KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $3}')
+            KERNEL=${KERNEL:-0}  # Ensure it defaults to 0 if empty
+
+            # Compute GFLOPS/s
+            if [[ "$KERNEL" == "0" || "$KERNEL" == "" ]]; then
+                GFLOPS="0"
+            else
+                GFLOPS=$(echo "scale=6; (2 * $SIZE * $SIZE * $SIZE) / ($KERNEL * 1.0e9)" | bc)
+            fi
+
+            # Log results
+            echo "$METHOD, $SIZE, $BLOCK, $ELEMENT, $KERNEL, $GFLOPS" >> $RESULTS_FILE
+            echo "Saved: $METHOD, $SIZE, $BLOCK, $ELEMENT, $KERNEL, $GFLOPS"
+
+(... more ...)
+------------------------------------------------------------
+
+TERM_OWNER: job killed by owner.
+Exited with exit code 130.
+
+Resource usage summary:
+
+    CPU time :                                   3.00 sec.
+    Max Memory :                                 11 MB
+    Average Memory :                             11.00 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65525.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                9
+    Run time :                                   6 sec.
+    Turnaround time :                            27 sec.
+
+The output (if any) is above this job summary.
+

@@ -1,0 +1,125 @@
+Testing mkn_omp with size 100...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 100, 0.000188, 10.631949
+Testing mkn_omp with size 200...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 200, 0.001197, 13.365637
+Testing mkn_omp with size 500...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 500, 0.017772, 14.067104
+Testing mkn_omp with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 1000, 0.127793, 15.650300
+Testing mkn_omp with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 2000, 1.822680, 8.778283
+Testing mkn_omp with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mkn_omp, 5000, 54.042142, 4.626019
+Testing lib with size 100...
+tee: /dev/tty: No such device or address
+Saved: lib, 100, 0.000074, 27.060026
+Testing lib with size 200...
+tee: /dev/tty: No such device or address
+Saved: lib, 200, 0.000476, 33.621675
+Testing lib with size 500...
+tee: /dev/tty: No such device or address
+Saved: lib, 500, 0.006711, 37.252238
+Testing lib with size 1000...
+tee: /dev/tty: No such device or address
+Saved: lib, 1000, 0.049586, 40.333918
+Testing lib with size 2000...
+tee: /dev/tty: No such device or address
+Saved: lib, 2000, 0.388295, 41.205791
+Testing lib with size 5000...
+tee: /dev/tty: No such device or address
+Saved: lib, 5000, 5.918528, 42.240232
+Performance results saved to performance_results.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23843394: <mm_batch_gpu> in cluster <dcc> Done
+
+Job <mm_batch_gpu> was submitted from host <n-62-12-81> by user <s230274> in cluster <dcc> at Thu Jan 23 13:37:31 2025
+Job was executed on host(s) <32*n-62-12-89>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Thu Jan 23 13:49:34 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Thu Jan 23 13:49:34 2025
+Terminated at Thu Jan 23 13:51:43 2025
+Results reported at Thu Jan 23 13:51:43 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Profiling script for OpenMP and BLAS matrix multiplication implementations
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+
+# Define output file
+RESULTS_FILE="performance_results.csv"
+
+# Clear old results
+echo "Method, Size, Execution Time (s), GFLOPS" > $RESULTS_FILE
+
+# Define methods
+METHODS="mkn_omp lib"
+
+# Define matrix sizes
+SIZES="100 200 500 1000 2000 5000"
+
+# Load necessary modules (adjust if required)
+module load nvhpc/24.11
+
+# Run tests for each method and size
+for METHOD in $METHODS; do
+    for SIZE in $SIZES; do
+        echo "Testing $METHOD with size $SIZE..."
+
+        # Run executable and capture output
+        OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" 2>&1 | tee /dev/tty)
+
+        # Extract Execution Time and GFLOPS
+        RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+
+        EXEC_TIME=$(echo "$RESULT_LINE" | awk -F', ' '{print $3}')
+        GFLOPS=$(echo "$RESULT_LINE" | awk -F', ' '{print $4}')
+
+        # Check if values are empty, if so, set them to zero
+        EXEC_TIME=${EXEC_TIME:-0}
+        GFLOPS=${GFLOPS:-0}
+
+        # Log results
+        echo "$METHOD, $SIZE, $EXEC_TIME, $GFLOPS" >> $RESULTS_FILE
+
+        # Debugging: Print confirmation of what was saved
+        echo "Saved: $METHOD, $SIZE, $EXEC_TIME, $GFLOPS"
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   142.00 sec.
+    Max Memory :                                 114 MB
+    Average Memory :                             101.67 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65422.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   129 sec.
+    Turnaround time :                            852 sec.
+
+The output (if any) is above this job summary.
+
