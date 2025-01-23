@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load data from CSV file
-file_path = "team_size_performance_results.csv"
+file_path = "team_size_performance_results_last.csv"
 
 # Read the file, skipping the header
 data = np.genfromtxt(file_path, delimiter=",", dtype=str, encoding=None, skip_header=1)
