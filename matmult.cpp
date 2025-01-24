@@ -85,7 +85,7 @@ void matmult_mkn_offload(int m, int n, int k, double **A, double **B, double **C
 
     double start_kernel = omp_get_wtime();
 
-    #pragma omp target teams distribute parallel for collapse(2) thread_limit(32)
+    #pragma omp target teams distribute parallel for collapse(2) thread_limit(128)
     for (int i = 0; i < m; i++) {
         for (int l = 0; l < k; l++) {
             for (int j = 0; j < n; j++) {
@@ -117,7 +117,7 @@ void matmult_mnk_offload(int m, int n, int k, double **A, double **B, double **C
     double start_kernel = omp_get_wtime();
 
     // Perform matrix multiplication on GPU
-    #pragma omp target teams distribute parallel for collapse(2) thread_limit(32)
+    #pragma omp target teams distribute parallel for collapse(2) thread_limit(128)
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             double sum = 0.0;
