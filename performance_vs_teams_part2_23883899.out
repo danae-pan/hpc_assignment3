@@ -1,0 +1,137 @@
+Testing mkn_offload with team size 1...
+Saved: mkn_offload, 1000, 1, 1.056348, 1.893315
+Testing mnk_offload with team size 1...
+Saved: mnk_offload, 1000, 1, 0.286431, 6.982484
+Testing mkn_offload with team size 32...
+Saved: mkn_offload, 1000, 32, 0.038247, 52.291683
+Testing mnk_offload with team size 32...
+Saved: mnk_offload, 1000, 32, 0.012850, 155.642023
+Testing mkn_offload with team size 64...
+Saved: mkn_offload, 1000, 64, 0.020810, 96.107640
+Testing mnk_offload with team size 64...
+Saved: mnk_offload, 1000, 64, 0.011103, 180.131495
+Testing mkn_offload with team size 114...
+Saved: mkn_offload, 1000, 114, 0.012664, 157.927984
+Testing mnk_offload with team size 114...
+Saved: mnk_offload, 1000, 114, 0.004311, 463.929482
+Testing mkn_offload with team size 228...
+Saved: mkn_offload, 1000, 228, 0.008528, 234.521575
+Testing mnk_offload with team size 228...
+Saved: mnk_offload, 1000, 228, 0.003203, 624.414611
+Testing mkn_offload with team size 456...
+Saved: mkn_offload, 1000, 456, 0.008743, 228.754432
+Testing mnk_offload with team size 456...
+Saved: mnk_offload, 1000, 456, 0.007183, 278.435194
+Testing mkn_offload with team size 912...
+Saved: mkn_offload, 1000, 912, 0.007440, 268.817204
+Testing mnk_offload with team size 912...
+Saved: mnk_offload, 1000, 912, 0.002793, 716.075904
+Testing mkn_offload with team size 1824...
+Saved: mkn_offload, 1000, 1824, 0.008128, 246.062992
+Testing mnk_offload with team size 1824...
+Saved: mnk_offload, 1000, 1824, 0.002751, 727.008360
+Testing mkn_offload with team size 3648...
+Saved: mkn_offload, 1000, 3648, 0.007700, 259.740259
+Testing mnk_offload with team size 3648...
+Saved: mnk_offload, 1000, 3648, 0.002772, 721.500721
+Testing mkn_offload with team size 7296...
+Saved: mkn_offload, 1000, 7296, 0.008044, 248.632521
+Testing mnk_offload with team size 7296...
+Saved: mnk_offload, 1000, 7296, 0.002748, 727.802037
+Testing mkn_offload with team size 14592...
+Saved: mkn_offload, 1000, 14592, 0.007975, 250.783699
+Testing mnk_offload with team size 14592...
+Saved: mnk_offload, 1000, 14592, 0.002781, 719.165767
+Testing mkn_offload with team size 29184...
+Saved: mkn_offload, 1000, 29184, 0.008084, 247.402276
+Testing mnk_offload with team size 29184...
+Saved: mnk_offload, 1000, 29184, 0.002845, 702.987697
+Results saved to team_size_performance_results_last.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23883899: <performance_vs_teams_part2> in cluster <dcc> Done
+
+Job <performance_vs_teams_part2> was submitted from host <n-62-12-81> by user <s182821> in cluster <dcc> at Fri Jan 24 17:45:22 2025
+Job was executed on host(s) <32*n-62-12-87>, in queue <hpcintrogpu>, as user <s182821> in cluster <dcc> at Fri Jan 24 17:45:22 2025
+</zhome/4c/5/135583> was used as the home directory.
+</zhome/4c/5/135583/assignment_3/repo/hpc_assignment3> was used as the working directory.
+Started at Fri Jan 24 17:45:22 2025
+Terminated at Fri Jan 24 17:47:15 2025
+Results reported at Fri Jan 24 17:47:15 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to test different team sizes for mkn_offload and mnk_offload
+
+#BSUB -J performance_vs_teams_part2
+#BSUB -o performance_vs_teams_part2_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# Define methods to test
+METHODS="mkn_offload mnk_offload"
+
+# Define matrix size (fixed for this experiment)
+MATRIX_SIZE=1000
+
+# Define number of teams to experiment with
+TEAM_SIZES="1 32 64 114 228 456 912 1824 3648 7296 14592 29184"  
+
+# Output file
+RESULTS_FILE="team_size_performance_results_last.csv"
+
+# Clear old results
+echo "Method, Matrix Size, Teams, Kernel (s), GFLOPS/s" > $RESULTS_FILE
+
+# Load necessary modules (adjust if required)
+module load nvhpc/24.11
+
+# Run tests for MKN and MNK with different team sizes
+for TEAM in $TEAM_SIZES; do
+    export OMP_NUM_TEAMS=$TEAM
+    for METHOD in $METHODS; do
+        echo "Testing $METHOD with team size $TEAM..."
+
+        # Run executable with team size and capture output
+        OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$MATRIX_SIZE" "$MATRIX_SIZE" "$MATRIX_SIZE" "$TEAM")
+
+        # Extract Kernel time
+        RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+        KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $5}')
+
+        # Check if Kernel time is empty or zero, if so, set to zero
+        KERNEL=${KERNEL:-0}
+
+        # Compute GFLOPS/s: (2 * m * n * k) / (Kernel Time * 10^9)
+        if [[ "$KERNEL" == "0" || "$KERNEL" == "" ]]; then
+            GFLOPS="0"
+        else
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   138.00 sec.
+    Max Memory :                                 112 MB
+    Average Memory :                             110.00 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65424.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   127 sec.
+    Turnaround time :                            113 sec.
+
+The output (if any) is above this job summary.
+

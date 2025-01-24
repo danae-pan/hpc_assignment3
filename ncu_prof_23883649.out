@@ -1,0 +1,97 @@
+==PROF== Connected to process 22471 (/zhome/4c/5/135583/assignment_3/repo/hpc_assignment3/matmult_c.nvc++)
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 0: 0%....50%....100% - 17 passes
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 1: 0%....50%....100% - 17 passes
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 2: 0%....50%....100% - 17 passes
+==PROF== Profiling "nvkernel_matmult_mnk_offload_..." - 3: 0%....50%....100% - 17 passes
+mnk_offload, 1000, -1, 9.388853, 2.579062, 0.000679
+   23437.500    167.092 # matmult_mnk_offload
+==PROF== Disconnected from process 22471
+==PROF== Report: /zhome/4c/5/135583/assignment_3/repo/hpc_assignment3/ncu_prof_23883649.ncu-rep
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23883649: <ncu_prof> in cluster <dcc> Done
+
+Job <ncu_prof> was submitted from host <n-62-12-81> by user <s182821> in cluster <dcc> at Fri Jan 24 16:57:08 2025
+Job was executed on host(s) <32*n-62-12-87>, in queue <hpcintrogpu>, as user <s182821> in cluster <dcc> at Fri Jan 24 16:59:38 2025
+</zhome/4c/5/135583> was used as the home directory.
+</zhome/4c/5/135583/assignment_3/repo/hpc_assignment3> was used as the working directory.
+Started at Fri Jan 24 16:59:38 2025
+Terminated at Fri Jan 24 16:59:55 2025
+Results reported at Fri Jan 24 16:59:55 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# 02614 - High-Performance Computing, January 2024
+# 
+# batch script to run matmult on a dedicated GPU server in the hpcintrogpu
+# queue
+#
+# Author: Bernd Dammann <bd@cc.dtu.dk>
+#         Hans Henrik Brandenborg Sørensen <hhbs@dtu.dk>
+#
+#BSUB -J ncu_prof
+#BSUB -o ncu_prof_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# define the driver name to use
+# valid values: matmult_c.nvc++, matmult_f.nvc++
+#
+EXECUTABLE=matmult_c.nvc++
+
+# define the mkn values in the MKN variable
+#
+SIZE="1000"
+
+# define the method type in TYPE
+#
+TYPE="mnk_offload"
+
+TEAMS="128"
+
+# you have exclusive access to the GPU and only need 1 iteration from
+# the driver for ncu to collect metrics with high accuary
+#
+export MFLOPS_MAX_IT=1
+export MATMULT_COMPARE=0
+
+# set tmp dir for profiler lock
+#
+export TMPDIR=$__LSF_JOB_TMPDIR__
+
+# experiment name 
+#
+JID=${LSB_JOBID}
+EXPOUT="${LSB_JOBNAME}_${JID}"
+
+# load module for shared cuda libraries
+module load nvhpc/24.11
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   20.00 sec.
+    Max Memory :                                 436 MB
+    Average Memory :                             436.00 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65100.00 MB
+    Max Swap :                                   -
+    Max Processes :                              7
+    Max Threads :                                20
+    Run time :                                   19 sec.
+    Turnaround time :                            167 sec.
+
+The output (if any) is above this job summary.
+

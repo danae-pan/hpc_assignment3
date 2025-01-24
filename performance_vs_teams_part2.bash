@@ -30,6 +30,7 @@ module load nvhpc/24.11
 
 # Run tests for MKN and MNK with different team sizes
 for TEAM in $TEAM_SIZES; do
+    export OMP_NUM_TEAMS=$TEAM
     for METHOD in $METHODS; do
         echo "Testing $METHOD with team size $TEAM..."
 

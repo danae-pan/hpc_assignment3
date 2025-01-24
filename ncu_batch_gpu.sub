@@ -23,17 +23,20 @@ EXECUTABLE=matmult_c.nvc++
 
 # define the mkn values in the MKN variable
 #
-SIZE="1000"
+SIZE="5000"
 
 # define the method type in TYPE
 #
-TYPE="mnk_offload"
+TYPE="mkn_offload"
+
+TEAMS="128"
 
 # you have exclusive access to the GPU and only need 1 iteration from
 # the driver for ncu to collect metrics with high accuary
 #
 export MFLOPS_MAX_IT=1
 export MATMULT_COMPARE=0
+export OMP_NUM_TEAMS=$TEAM
 
 # set tmp dir for profiler lock
 #

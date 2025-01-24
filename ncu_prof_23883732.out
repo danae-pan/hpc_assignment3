@@ -1,0 +1,99 @@
+==PROF== Connected to process 50384 (/zhome/4c/5/135583/assignment_3/repo/hpc_assignment3/matmult_c.nvc++)
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 0: 0%....50%....100% - 17 passes
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 1: 0%....50%....100% - 17 passes
+==PROF== Profiling "__pgi_uacc_cuda_fill_44" - 2: 0%....50%....100% - 17 passes
+==PROF== Profiling "nvkernel_matmult_mkn_offload_..." - 3: 0%....50%...
+==WARNING== Launching the workload is taking more time than expected. If this continues to hang, terminate the profile and re-try by profiling the range of all related launches using '--replay-mode range'. See https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#replay for more details.
+.100% - 17 passes
+mkn_offload, 5000, -1, 9.519578, 54.730921, 0.003855
+  585937.500   3890.730 # matmult_mkn_offload
+==PROF== Disconnected from process 50384
+==PROF== Report: /zhome/4c/5/135583/assignment_3/repo/hpc_assignment3/ncu_prof_23883732.ncu-rep
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23883732: <ncu_prof> in cluster <dcc> Done
+
+Job <ncu_prof> was submitted from host <n-62-12-81> by user <s182821> in cluster <dcc> at Fri Jan 24 17:17:22 2025
+Job was executed on host(s) <32*n-62-11-45>, in queue <hpcintrogpu>, as user <s182821> in cluster <dcc> at Fri Jan 24 17:17:39 2025
+</zhome/4c/5/135583> was used as the home directory.
+</zhome/4c/5/135583/assignment_3/repo/hpc_assignment3> was used as the working directory.
+Started at Fri Jan 24 17:17:39 2025
+Terminated at Fri Jan 24 17:18:49 2025
+Results reported at Fri Jan 24 17:18:49 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# 02614 - High-Performance Computing, January 2024
+# 
+# batch script to run matmult on a dedicated GPU server in the hpcintrogpu
+# queue
+#
+# Author: Bernd Dammann <bd@cc.dtu.dk>
+#         Hans Henrik Brandenborg Sørensen <hhbs@dtu.dk>
+#
+#BSUB -J ncu_prof
+#BSUB -o ncu_prof_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# define the driver name to use
+# valid values: matmult_c.nvc++, matmult_f.nvc++
+#
+EXECUTABLE=matmult_c.nvc++
+
+# define the mkn values in the MKN variable
+#
+SIZE="5000"
+
+# define the method type in TYPE
+#
+TYPE="mkn_offload"
+
+TEAMS="128"
+
+# you have exclusive access to the GPU and only need 1 iteration from
+# the driver for ncu to collect metrics with high accuary
+#
+export MFLOPS_MAX_IT=1
+export MATMULT_COMPARE=0
+export OMP_NUM_TEAMS=$TEAM
+
+# set tmp dir for profiler lock
+#
+export TMPDIR=$__LSF_JOB_TMPDIR__
+
+# experiment name 
+#
+JID=${LSB_JOBID}
+EXPOUT="${LSB_JOBNAME}_${JID}"
+
+# load module for shared cuda libraries
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   78.00 sec.
+    Max Memory :                                 442 MB
+    Average Memory :                             442.00 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65094.00 MB
+    Max Swap :                                   -
+    Max Processes :                              7
+    Max Threads :                                20
+    Run time :                                   70 sec.
+    Turnaround time :                            87 sec.
+
+The output (if any) is above this job summary.
+
