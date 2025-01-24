@@ -13,8 +13,8 @@ methods = sorted(df["Method"].unique())  # 3 = Plain, 4 = Norm-based
 matrix_sizes = sorted(df["GridSize"].unique())
 
 # Define markers and line styles for different methods
-marker_styles = {3: "o", 4: "s"}  # Circle for plain, square for norm-based
-line_styles = {3: "--", 4: "-"}   # Dashed for plain, solid for norm-based
+marker_styles = {1: "o", 4: "s"}  # Circle for plain, square for norm-based
+line_styles = {1: "--", 4: "-"}   # Dashed for plain, solid for norm-based
 colors = ["b", "r", "g", "m", "c", "y"]  # Different colors for different iterations
 
 plt.figure(figsize=(12, 7))
