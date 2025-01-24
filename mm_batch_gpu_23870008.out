@@ -1,0 +1,143 @@
+Testing mkn_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 100, 0, 0
+Testing mkn_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 200, 0, 0
+Testing mkn_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 500, 0, 0
+Testing mkn_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 1000, 0, 0
+Testing mkn_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 2000, 0, 0
+Testing mkn_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mkn_offload, 5000, 0, 0
+Testing mnk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 100, 0, 0
+Testing mnk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 200, 0, 0
+Testing mnk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 500, 0, 0
+Testing mnk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 1000, 0, 0
+Testing mnk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 2000, 0, 0
+Testing mnk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: mnk_offload, 5000, 0, 0
+Testing blk_offload with size 100...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 100, 0, 0
+Testing blk_offload with size 200...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 200, 0, 0
+Testing blk_offload with size 500...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 500, 0, 0
+Testing blk_offload with size 1000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 1000, 0, 0
+Testing blk_offload with size 2000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 2000, 0, 0
+Testing blk_offload with size 5000...
+tee: /dev/tty: No such device or address
+Saved: blk_offload, 5000, 0, 0
+Results saved to offload_performance_noasys.csv
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23870008: <mm_batch_gpu> in cluster <dcc> Done
+
+Job <mm_batch_gpu> was submitted from host <n-62-30-3> by user <s230274> in cluster <dcc> at Fri Jan 24 08:57:47 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Fri Jan 24 08:57:48 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3> was used as the working directory.
+Started at Fri Jan 24 08:57:48 2025
+Terminated at Fri Jan 24 08:57:50 2025
+Results reported at Fri Jan 24 08:57:50 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# Batch script to test all offload methods and compute GFLOPS/s
+# Batch script for profiling all matrix multiplication implementations using NSight Systems (NSYS) and Nsight Compute (NCU)
+
+#BSUB -J mm_batch_gpu
+#BSUB -o mm_batch_gpu_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"
+
+# Define method names
+METHODS="mkn_offload mnk_offload blk_offload"
+
+# Define matrix sizes
+SIZES="100 200 500 1000 2000 5000"
+
+# Output file
+RESULTS_FILE="offload_performance_noasys.csv"
+
+# Clear old results
+echo "Method, Size, Kernel (s), GFLOPS/s" > $RESULTS_FILE
+
+# Load necessary modules (adjust if required)
+module load nvhpc/24.11
+
+# Run tests for each method and size
+for METHOD in $METHODS; do
+    for SIZE in $SIZES; do
+        echo "Testing $METHOD with size $SIZE..."
+
+        # Run executable and capture output
+        OUTPUT=$(./matmult_c.nvc++ "$METHOD" "$SIZE" "$SIZE" "$SIZE" 2>&1 | tee /dev/tty)
+
+        # Extract Kernel time
+        RESULT_LINE=$(echo "$OUTPUT" | grep -m1 "$METHOD")
+
+        KERNEL=$(echo "$RESULT_LINE" | awk -F', ' '{print $4}')
+
+        # Check if Kernel time is empty or zero, if so, set to zero
+        KERNEL=${KERNEL:-0}
+
+        # Compute GFLOPS/s: (2 * m * n * k) / (Kernel Time * 10^9)
+        if [[ "$KERNEL" == "0" || "$KERNEL" == "" ]]; then
+            GFLOPS="0"
+        else
+            GFLOPS=$(echo "scale=6; (2 * $SIZE * $SIZE * $SIZE) / ($KERNEL * 10^9)" | bc)
+        fi
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.94 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   2 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) is above this job summary.
+
