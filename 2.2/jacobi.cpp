@@ -15,7 +15,7 @@ int jacobi_parallel_opt(double ***f, double ***u, double ***u_new, int N, int it
     double h2 = h * h;
     int iter;
 
-    printf("DEBUG: Checking OpenMP Execution: Running on Device ID %d\n", omp_is_initial_device());
+    printf("CPU PARALLEL OPT\n");
 
     for  (iter = 1; iter <= iter_max; iter++)
     {
@@ -47,7 +47,7 @@ int jacobi_parallel_opt(double ***f, double ***u, double ***u_new, int N, int it
 }
 
 
-int jacobi_parallel_opt_norm(double ***f, double ***u, double ***u_new, int N, int iter_max, double *tolerance, double* final_diff)
+int jacobi_parallel_opt_norm(double ***f, double ***u, double ***u_new, int N, int iter_max, double tolerance, double* final_diff)
 {
     double h = 2.0 / N;
     double h2 = h * h;
@@ -84,7 +84,7 @@ int jacobi_parallel_opt_norm(double ***f, double ***u, double ***u_new, int N, i
         diff = sqrt(diff / (N * N * N));
 
         // Stop if converged
-        if (diff < *tolerance)
+        if (diff < tolerance)
         {
             printf("Converged after %d iterations with RMS diff = %.6f\n", iter, diff);
             *final_diff = diff;  // Store final diff value

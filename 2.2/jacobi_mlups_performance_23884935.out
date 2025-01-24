@@ -1,0 +1,122 @@
+Running Jacobi solver for GridSize=64, Iterations=100, Method=3...
+Running Jacobi solver for GridSize=64, Iterations=100, Method=4...
+Running Jacobi solver for GridSize=64, Iterations=200, Method=3...
+Running Jacobi solver for GridSize=64, Iterations=200, Method=4...
+Running Jacobi solver for GridSize=64, Iterations=400, Method=3...
+Running Jacobi solver for GridSize=64, Iterations=400, Method=4...
+Running Jacobi solver for GridSize=64, Iterations=800, Method=3...
+Running Jacobi solver for GridSize=64, Iterations=800, Method=4...
+Running Jacobi solver for GridSize=128, Iterations=100, Method=3...
+Running Jacobi solver for GridSize=128, Iterations=100, Method=4...
+Running Jacobi solver for GridSize=128, Iterations=200, Method=3...
+Running Jacobi solver for GridSize=128, Iterations=200, Method=4...
+Running Jacobi solver for GridSize=128, Iterations=400, Method=3...
+Running Jacobi solver for GridSize=128, Iterations=400, Method=4...
+Running Jacobi solver for GridSize=128, Iterations=800, Method=3...
+Running Jacobi solver for GridSize=128, Iterations=800, Method=4...
+Running Jacobi solver for GridSize=256, Iterations=100, Method=3...
+Running Jacobi solver for GridSize=256, Iterations=100, Method=4...
+Running Jacobi solver for GridSize=256, Iterations=200, Method=3...
+Running Jacobi solver for GridSize=256, Iterations=200, Method=4...
+Running Jacobi solver for GridSize=256, Iterations=400, Method=3...
+Running Jacobi solver for GridSize=256, Iterations=400, Method=4...
+Running Jacobi solver for GridSize=256, Iterations=800, Method=3...
+Running Jacobi solver for GridSize=256, Iterations=800, Method=4...
+Running Jacobi solver for GridSize=384, Iterations=100, Method=3...
+Running Jacobi solver for GridSize=384, Iterations=100, Method=4...
+Running Jacobi solver for GridSize=384, Iterations=200, Method=3...
+Running Jacobi solver for GridSize=384, Iterations=200, Method=4...
+Running Jacobi solver for GridSize=384, Iterations=400, Method=3...
+Running Jacobi solver for GridSize=384, Iterations=400, Method=4...
+Running Jacobi solver for GridSize=384, Iterations=800, Method=3...
+Running Jacobi solver for GridSize=384, Iterations=800, Method=4...
+User defined signal 2
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23884935: <jacobi_mlups_performance> in cluster <dcc> Exited
+
+Job <jacobi_mlups_performance> was submitted from host <n-62-11-46> by user <s230274> in cluster <dcc> at Fri Jan 24 20:34:19 2025
+Job was executed on host(s) <32*n-62-12-88>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Fri Jan 24 20:34:21 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3/2.2> was used as the working directory.
+Started at Fri Jan 24 20:34:21 2025
+Terminated at Fri Jan 24 20:48:44 2025
+Results reported at Fri Jan 24 20:48:44 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# 02614 - High-Performance Computing, January 2024
+# Batch script to run Jacobi solver on a dedicated GPU server in the hpcintrogpu queue
+
+#BSUB -J jacobi_mlups_performance
+#BSUB -o jacobi_mlups_performance_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 00:15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"  # Request 1 GPU
+
+# Set OpenMP environment variables
+export OMP_PROC_BIND=TRUE
+export OMP_PLACES=cores
+export OMP_NUM_DEVICES=1
+export OMP_TARGET_OFFLOAD=MANDATORY
+export CUDA_VISIBLE_DEVICES=0  # Ensure the GPU is visible
+
+# Load NVIDIA HPC SDK
+module load nvhpc/24.11
+
+# Define output file
+RESULT_FILE="jacobi_mlups_performance.data"
+
+# Clear output file and add header
+echo "GridSize Iterations Method ExecTime_CPU ExecTime_GPU MLUPS_CPU MLUPS_GPU" > $RESULT_FILE
+
+# Define grid sizes and iteration counts
+GRID_SIZES=(64 128 256 384)
+ITERATION_COUNTS=(100 200 400 800)  # Different iteration values
+METHODS=(3 4)  # 3 = Plain Jacobi, 4 = Norm-based Jacobi
+TOLERANCE=1e-3  # Convergence tolerance
+
+# Path to the executable
+EXECUTABLE="./poisson"
+
+# Run experiments
+for N in "${GRID_SIZES[@]}"; do
+    for ITER in "${ITERATION_COUNTS[@]}"; do
+        for METHOD in "${METHODS[@]}"; do
+            echo "Running Jacobi solver for GridSize=$N, Iterations=$ITER, Method=$METHOD..."
+
+            # Run on CPU (offload=0)
+            START_TIME_CPU=$(date +%s.%N)
+            EXEC_TIME_CPU=$($EXECUTABLE $N $ITER 0 $METHOD $TOLERANCE | grep "Jacobi Offload Execution Time" | awk '{print $5}')
+            END_TIME_CPU=$(date +%s.%N)
+            TOTAL_TIME_CPU=$(echo "$END_TIME_CPU - $START_TIME_CPU" | bc)
+
+
+(... more ...)
+------------------------------------------------------------
+
+TERM_RUNLIMIT: job killed after reaching LSF run time limit.
+Exited with exit code 140.
+
+Resource usage summary:
+
+    CPU time :                                   948.00 sec.
+    Max Memory :                                 44 MB
+    Average Memory :                             31.67 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65492.00 MB
+    Max Swap :                                   -
+    Max Processes :                              7
+    Max Threads :                                12
+    Run time :                                   922 sec.
+    Turnaround time :                            865 sec.
+
+The output (if any) is above this job summary.
+

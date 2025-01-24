@@ -21,7 +21,7 @@ int jacobi_offload(double ***f, double ***u, double ***u_new, int N, int iter_ma
 
     #pragma omp target
     {
-        printf("DEBUG: Checking OpenMP Offload: Running on Device ID %d\n", omp_is_initial_device());
+        printf("DEBUG2: Checking OpenMP Offload: Running on Device ID %d\n", omp_is_initial_device());
     }
 
     for (int iter = 0; iter < iter_max; iter++){
@@ -109,7 +109,7 @@ int jacobi_offload_dual(double *f, double *u, double *u_new, int N, int iter_max
 }
 
 
-int jacobi_offload_norm(double ***f, double ***u, double ***u_new, int N, int iter_max, double tolerance) 
+int jacobi_offload_opt_norm(double ***f, double ***u, double ***u_new, int N, int iter_max, double tolerance) 
 {
     double h2 = (2.0 / N) * (2.0 / N);
     double diff = 0.0;
