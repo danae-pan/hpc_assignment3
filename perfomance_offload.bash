@@ -18,7 +18,7 @@ METHODS="mkn_offload mnk_offload blk_offload asy_offload"
 SIZES="100 200 500 1000 2000 5000"
 
 # Output file
-RESULTS_FILE="offload_performance_results_gflops_draftsize5.csv"
+RESULTS_FILE="offload_performance_results_gflops.csv"
 
 # Clear old results
 echo "Method, Size, Kernel (s), GFLOPS/s" > $RESULTS_FILE
