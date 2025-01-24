@@ -160,7 +160,7 @@ extern "C"
     }
 }
 
-#define _BLOCK_SIZE 2
+#define _BLOCK_SIZE 5
 #define _UNROLL_FACTOR 8 // Try different unroll factors (e.g., 4, 8, 16)
 
 extern "C"
