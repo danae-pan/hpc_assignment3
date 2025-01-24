@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <omp.h>
+#include <cuda_runtime.h>
+#include <cublas_v2.h>
 
 // Function to initialize data transfers to GPU (H2D)
 void initialize_offload(int m, int n, int k, double **A, double **B, double **C, double *h2d_time) {
@@ -19,6 +21,58 @@ void finalize_offload(int m, int n, int k, double **A, double **B, double **C, d
     #pragma omp target exit data map(from: C[0:m][0:n])
 
     *d2h_time = omp_get_wtime() - start_D2H;  // Store D2H time
+}
+
+// OpenMP MKN
+extern "C" {
+void matmult_mkn_omp(int m, int n, int k, double **A, double **B, double **C) {
+    double start = omp_get_wtime();
+
+
+    #pragma omp parallel shared(A,B,C)
+    {
+        #pragma omp for
+        for(int i=0;i<m;i++){
+            for(int l=0;l<k;l++){
+                for(int j=0;j<n;j++){
+                    // #pragma omp atomic
+                    C[i][j] += A[i][l]*B[l][j];
+                }
+            }
+        }
+        
+        double end = omp_get_wtime();
+        double exec_time = end - start;
+
+        // Compute GFLOPS: 2 * m * n * k / (time * 10^9)
+        double gflops = (2.0 * m * n * k) / (exec_time * 1.0e9);
+
+        // Print results in the same format
+        printf("mkn_omp, %d, %f, %f\n", m, exec_time, gflops);
+    }
+    }
+}
+
+
+// lib
+extern "C" {
+    #include <cblas.h>
+    void matmult_lib(int m, int n, int k, double **A, double **B, double **C) {
+        double start = omp_get_wtime();
+
+        // Call BLAS function
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
+                    m, n, k, 1.0, *A, k, *B, n, 0.0, *C, n);
+
+        double end = omp_get_wtime();
+        double exec_time = end - start;
+
+        // Compute GFLOPS
+        double gflops = (2.0 * m * n * k) / (exec_time * 1.0e9);
+
+        // Print results in the same format
+        printf("matmult_lib, %d, %f, %f\n", m, exec_time, gflops);
+    }
 }
 
 // OpenMP MKN Offload
@@ -151,6 +205,58 @@ void matmult_asy_offload(int m, int n, int k, double **A, double **B, double **C
 
         // Print timing results
         printf("asy_offload, %d, %f, %f, %f\n", m, h2d_time, omp_get_wtime() - start_H2D, d2h_time);
+    }
+}
+}
+
+
+// OpenMP LIB Offload using CUBLAS
+extern "C" {
+void matmult_lib_offload(int m, int n, int k, double **A, double **B, double **C) {
+    double h2d_time, d2h_time, kernel_time;
+
+    double *d_A, *d_B, *d_C;
+    cublasHandle_t handle;
+    cublasCreate(&handle);
+
+    // Allocate memory on GPU
+    double start_H2D = omp_get_wtime();
+    cudaMalloc((void **)&d_A, m * k * sizeof(double));
+    cudaMalloc((void **)&d_B, k * n * sizeof(double));
+    cudaMalloc((void **)&d_C, m * n * sizeof(double));
+
+    // Transfer A and B to GPU
+    cudaMemcpy(d_A, *A, m * k * sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, *B, k * n * sizeof(double), cudaMemcpyHostToDevice);
+    h2d_time = omp_get_wtime() - start_H2D;
+
+    double alpha = 1.0, beta = 0.0;
+
+    // Start kernel execution time measurement
+    double start_kernel = omp_get_wtime();
+    
+    // Perform DGEMM on GPU
+    cublasDgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N, 
+                 m, n, k, &alpha, d_A, m, d_B, k, &beta, d_C, m);
+    
+    kernel_time = omp_get_wtime() - start_kernel;
+
+    // Transfer C back to host
+    double start_D2H = omp_get_wtime();
+    cudaMemcpy(*C, d_C, m * n * sizeof(double), cudaMemcpyDeviceToHost);
+    d2h_time = omp_get_wtime() - start_D2H;
+
+    // Free GPU memory
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
+    cublasDestroy(handle);
+
+    // Print results in the same format
+    #pragma omp master
+    {
+        #pragma omp flush
+        printf("lib_offload, %d, %f, %f, %f\n", m, h2d_time, kernel_time, d2h_time);
     }
 }
 }
