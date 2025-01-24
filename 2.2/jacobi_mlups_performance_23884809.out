@@ -1,0 +1,121 @@
+Running Jacobi norm-based solver for GridSize=64, Iterations=100...
+Jacobi Offload Execution Time: 0.413713 seconds
+Running Jacobi norm-based solver for GridSize=64, Iterations=200...
+Jacobi Offload Execution Time: 0.798118 seconds
+Running Jacobi norm-based solver for GridSize=64, Iterations=400...
+Jacobi Offload Execution Time: 1.587887 seconds
+Running Jacobi norm-based solver for GridSize=64, Iterations=800...
+Jacobi Offload Execution Time: 3.160112 seconds
+Running Jacobi norm-based solver for GridSize=128, Iterations=100...
+Jacobi Offload Execution Time: 1.956371 seconds
+Running Jacobi norm-based solver for GridSize=128, Iterations=200...
+Jacobi Offload Execution Time: 3.869808 seconds
+Running Jacobi norm-based solver for GridSize=128, Iterations=400...
+Jacobi Offload Execution Time: 7.719986 seconds
+Running Jacobi norm-based solver for GridSize=128, Iterations=800...
+Jacobi Offload Execution Time: 15.485527 seconds
+Running Jacobi norm-based solver for GridSize=256, Iterations=100...
+Jacobi Offload Execution Time: 7.808772 seconds
+Running Jacobi norm-based solver for GridSize=256, Iterations=200...
+Jacobi Offload Execution Time: 15.505618 seconds
+Running Jacobi norm-based solver for GridSize=256, Iterations=400...
+Jacobi Offload Execution Time: 31.016881 seconds
+Running Jacobi norm-based solver for GridSize=256, Iterations=800...
+Jacobi Offload Execution Time: 62.144351 seconds
+Running Jacobi norm-based solver for GridSize=384, Iterations=100...
+Jacobi Offload Execution Time: 17.891372 seconds
+Running Jacobi norm-based solver for GridSize=384, Iterations=200...
+Jacobi Offload Execution Time: 35.669654 seconds
+Running Jacobi norm-based solver for GridSize=384, Iterations=400...
+Jacobi Offload Execution Time: 71.644323 seconds
+Running Jacobi norm-based solver for GridSize=384, Iterations=800...
+Jacobi Offload Execution Time: 142.699117 seconds
+All experiments completed. Results saved to jacobi_mlups_performance.data.
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23884809: <jacobi_mlups_performance> in cluster <dcc> Done
+
+Job <jacobi_mlups_performance> was submitted from host <n-62-11-46> by user <s230274> in cluster <dcc> at Fri Jan 24 19:28:25 2025
+Job was executed on host(s) <32*n-62-12-87>, in queue <hpcintrogpu>, as user <s230274> in cluster <dcc> at Fri Jan 24 19:28:26 2025
+</zhome/97/2/198344> was used as the home directory.
+</zhome/97/2/198344/assignment_3/hpc_assignment3/2.2> was used as the working directory.
+Started at Fri Jan 24 19:28:26 2025
+Terminated at Fri Jan 24 19:36:37 2025
+Results reported at Fri Jan 24 19:36:37 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+# 02614 - High-Performance Computing, January 2024
+# Batch script to run Jacobi solver on a dedicated GPU server in the hpcintrogpu queue
+
+#BSUB -J jacobi_mlups_performance
+#BSUB -o jacobi_mlups_performance_%J.out
+#BSUB -q hpcintrogpu
+#BSUB -n 32
+#BSUB -R "rusage[mem=2048]"
+#BSUB -W 00:15
+#BSUB -R "span[hosts=1]"
+#BSUB -gpu "num=1:mode=exclusive_process"  # Request 1 GPU
+
+# Set OpenMP environment variables
+export OMP_PROC_BIND=TRUE
+export OMP_PLACES=cores
+export OMP_NUM_DEVICES=1
+export OMP_TARGET_OFFLOAD=MANDATORY
+export CUDA_VISIBLE_DEVICES=0  # Ensure the GPU is visible
+
+# Load NVIDIA HPC SDK
+module load nvhpc/24.11
+
+# Define output file
+RESULT_FILE="jacobi_mlups_performance.data"
+
+# Clear output file and add header
+echo "GridSize Iterations ExecTime_CPU ExecTime_GPU MLUPS_CPU MLUPS_GPU" > $RESULT_FILE
+
+# Define grid sizes and iteration counts
+GRID_SIZES=(64 128 256 384)
+ITERATION_COUNTS=(100 200 400 800)  # Different iteration values
+TOLERANCE=1e-3  # Convergence tolerance
+
+# Path to the executable
+EXECUTABLE="./poisson"
+
+# Run experiments
+for N in "${GRID_SIZES[@]}"; do
+    for ITER in "${ITERATION_COUNTS[@]}"; do
+        echo "Running Jacobi norm-based solver for GridSize=$N, Iterations=$ITER..."
+
+        # Run on CPU (offload=0, method=4)
+        START_TIME_CPU=$(date +%s.%N)
+        $EXECUTABLE $N $ITER 0 4 $TOLERANCE | grep "Jacobi Offload Execution Time"
+        END_TIME_CPU=$(date +%s.%N)
+        EXEC_TIME_CPU=$(echo "$END_TIME_CPU - $START_TIME_CPU" | bc)
+
+        # Run on GPU 1 (offload=1, method=4)
+        START_TIME_GPU=$(date +%s.%N)
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   544.00 sec.
+    Max Memory :                                 327 MB
+    Average Memory :                             81.00 MB
+    Total Requested Memory :                     65536.00 MB
+    Delta Memory :                               65209.00 MB
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                10
+    Run time :                                   607 sec.
+    Turnaround time :                            492 sec.
+
+The output (if any) is above this job summary.
+

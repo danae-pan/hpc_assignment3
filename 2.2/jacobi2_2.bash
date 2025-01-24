@@ -37,10 +37,10 @@ for N in "${GRID_SIZES[@]}"; do
         echo "Running Poisson solver for GridSize=$N, Iterations=$ITER..."
 
         # Run with 1 GPU
-        EXEC_TIME_1GPU=$(./poisson $N $ITER 0 | grep "Jacobi Offload Execution Time" | awk '{print $5}')
+        EXEC_TIME_1GPU=$(./poisson $N $ITER 1 2| grep "Jacobi Offload Execution Time" | awk '{print $5}')
 
         # Run with 2 GPUs
-        EXEC_TIME_2GPU=$(./poisson $N $ITER 1 | grep "Jacobi Offload Execution Time" | awk '{print $5}')
+        EXEC_TIME_2GPU=$(./poisson $N $ITER 2 | grep "Jacobi Offload Execution Time" | awk '{print $5}')
 
         # Calculate speed-up
         SPEEDUP=$(echo "scale=6; $EXEC_TIME_1GPU / $EXEC_TIME_2GPU" | bc)

@@ -9,17 +9,20 @@
 #include "warmup.h"
 
 int main(int argc, char *argv[]) {
-    int N = 100, iter_max = 1000, method = 0; // Default values
+    int N = 100, iter_max = 1000, offload = 0; // 0 cpu, 1 gpu 1, 2 gpu 2
+    int method = 1; // 1 map, 2 mempsy, 3 naive, 4 norm
     double start_T = 20.0; // Default starting temperature
     double ***f, ***u, ***u_new;
     double *f_gpu0, *u_gpu0, *u_new_gpu0;
     double *f_gpu1, *u_gpu1, *u_new_gpu1;
+    double final_diff = 0.0; 
 
     // Check for command-line arguments
     if (argc >= 4) {
         N = atoi(argv[1]);        // Grid size
         iter_max = atoi(argv[2]); // Maximum iterations
-        method = atoi(argv[3]);  // 0 = one GPU, 1 = dual GPU
+        offload = atoi(argv[3]);  
+        methodd = atoi(argv[4]);
     }
 
     // Allocate memory on the CPU using malloc_3d()
@@ -68,71 +71,110 @@ int main(int argc, char *argv[]) {
     //printf("DEBUG: Running Jacobi Offload computation...\n");
     double start_time = omp_get_wtime();
 
-    if (method == 0) {
-        // Single GPU execution
-        size_t size = (N+2) * (N+2) * (N+2) * sizeof(double);
-        d_malloc_3d(N+2, N+2, N+2, &f_gpu0);
-        d_malloc_3d(N+2, N+2, N+2, &u_gpu0);
-        d_malloc_3d(N+2, N+2, N+2, &u_new_gpu0);
+    switch(offload):
+        case 0:
+            if(method = 3) {
+                jacobi_parallel_opt(f, u, u_new, N, iter_max);
+            }
+            else jacobi_parallel_opt_norm(f, u, u_new, N, iter_max, 1e-3, &final_diff);
 
-        omp_target_memcpy(f_gpu0, f[0][0], size, 0, 0, 0, omp_get_initial_device());
-        omp_target_memcpy(u_gpu0, u[0][0], size, 0, 0, 0, omp_get_initial_device());
-        omp_target_memcpy(u_new_gpu0, u_new[0][0], size, 0, 0, 0, omp_get_initial_device());
+        case 1:
+            if (method == 2) {
+                // Single GPU execution
+                size_t size = (N+2) * (N+2) * (N+2) * sizeof(double);
+                d_malloc_3d(N+2, N+2, N+2, &f_gpu0);
+                d_malloc_3d(N+2, N+2, N+2, &u_gpu0);
+                d_malloc_3d(N+2, N+2, N+2, &u_new_gpu0);
 
-        jacobi_offload(f, u, u_new, N, iter_max);
+                omp_target_mem cpy(f_gpu0, f[0][0], size, 0, 0, 0, omp_get_initial_device());
+                omp_target_memcpy(u_gpu0, u[0][0], size, 0, 0, 0, omp_get_initial_device());
+                omp_target_memcpy(u_new_gpu0, u_new[0][0], size, 0, 0, 0, omp_get_initial_device());
 
-        omp_target_memcpy(u_new[0][0], u_new_gpu0, size, 0, 0, omp_get_initial_device(), 0);
+                jacobi_offload(f, u, u_new, N, iter_max);
 
-        d_free_3d(f_gpu0);
-        d_free_3d(u_gpu0);
-        d_free_3d(u_new_gpu0);
+                omp_target_memcpy(u_new[0][0], u_new_gpu0, size, 0, 0, omp_get_initial_device(), 0);
 
-    } else {
-        // Dual GPU execution
-        int N_half = N / 2;
-        size_t size_half = (N_half+2) * (N+2) * (N+2) * sizeof(double);
+                d_free_3d(f_gpu0);
+                d_free_3d(u_gpu0);
+                d_free_3d(u_new_gpu0);
 
-        // Allocate GPU memory
-        omp_set_default_device(0);
-        d_malloc_3d(N_half+2, N+2, N+2, &f_gpu0);
-        d_malloc_3d(N_half+2, N+2, N+2, &u_gpu0);
-        d_malloc_3d(N_half+2, N+2, N+2, &u_new_gpu0);
+            } 
+            else if (method == 1) {
+                // Use OpenMP map-based offloading
+                //printf("DEBUG: Copying grid data to GPU using OpenMP map...\n");
+                #pragma omp target enter data map(to: f[0:N+2][0:N+2][0:N+2], \
+                                                u[0:N+2][0:N+2][0:N+2], \
+                                                u_new[0:N+2][0:N+2][0:N+2])
+                //printf("DEBUG: Grid data copied to GPU successfully using map.\n");
 
-        omp_set_default_device(1);
-        d_malloc_3d(N_half+2, N+2, N+2, &f_gpu1);
-        d_malloc_3d(N_half+2, N+2, N+2, &u_gpu1);
-        d_malloc_3d(N_half+2, N+2, N+2, &u_new_gpu1);
+                jacobi_offload(f, u, u_new, N, iter_max);
 
-        // Enable Peer Access
-        cudaSetDevice(0);
-        cudaDeviceEnablePeerAccess(1, 0);
-        cudaSetDevice(1);
-        cudaDeviceEnablePeerAccess(0, 0);
+                // Copy results back to CPU (only needed for map)
+                #pragma omp target exit data map(from: u_new[0:N+2][0:N+2][0:N+2])
+            }
+            else {
+                // Use OpenMP map-based offloading
+                //printf("DEBUG: Copying grid data to GPU using OpenMP map...\n");
+                #pragma omp target enter data map(to: f[0:N+2][0:N+2][0:N+2], \
+                                                u[0:N+2][0:N+2][0:N+2], \
+                                                u_new[0:N+2][0:N+2][0:N+2])
+                //printf("DEBUG: Grid data copied to GPU successfully using map.\n");
+                jacobi_offload_norm(f, u, u_new, N, iter_max, 1e-3);
 
-        // Copy data to GPUs
-        omp_set_default_device(0);
-        omp_target_memcpy(f_gpu0, f[0][0], size_half, 0, 0, 0, omp_get_initial_device());
-        omp_target_memcpy(u_gpu0, u[0][0], size_half, 0, 0, 0, omp_get_initial_device());
+                // Copy results back to CPU (only needed for map)
+                #pragma omp target exit data map(from: u_new[0:N+2][0:N+2][0:N+2])
+            }
+            break;
 
-        omp_set_default_device(1);
-        omp_target_memcpy(f_gpu1, f[N_half][0], size_half, 0, 0, 1, omp_get_initial_device());
-        omp_target_memcpy(u_gpu1, u[N_half][0], size_half, 0, 0, 1, omp_get_initial_device());
+        case 2:
+            
+            // Dual GPU execution
+            int N_half = N / 2;
+            size_t size_half = (N_half+2) * (N+2) * (N+2) * sizeof(double);
 
-        // Run Jacobi on both GPUs in parallel
-        #pragma omp parallel sections
-        {
-            #pragma omp section
-            jacobi_offload_dual(f_gpu0, u_gpu0, u_new_gpu0, N_half, iter_max, 0);
+            // Allocate GPU memory
+            omp_set_default_device(0);
+            d_malloc_3d(N_half+2, N+2, N+2, &f_gpu0);
+            d_malloc_3d(N_half+2, N+2, N+2, &u_gpu0);
+            d_malloc_3d(N_half+2, N+2, N+2, &u_new_gpu0);
 
-            #pragma omp section
-            jacobi_offload_dual(f_gpu1, u_gpu1, u_new_gpu1, N_half, iter_max, 1);
-        }
+            omp_set_default_device(1);
+            d_malloc_3d(N_half+2, N+2, N+2, &f_gpu1);
+            d_malloc_3d(N_half+2, N+2, N+2, &u_gpu1);
+            d_malloc_3d(N_half+2, N+2, N+2, &u_new_gpu1);
 
-        
-        // Copy results back to CPU
-        omp_target_memcpy(u_new[0][0], u_new_gpu0, size_half, 0, 0, omp_get_initial_device(), 0);
-        omp_target_memcpy(u_new[N_half][0], u_new_gpu1, size_half, 0, 0, omp_get_initial_device(), 1);
-    }
+            // Enable Peer Access
+            cudaSetDevice(0);
+            cudaDeviceEnablePeerAccess(1, 0);
+            cudaSetDevice(1);
+            cudaDeviceEnablePeerAccess(0, 0);
+
+            // Copy data to GPUs
+            omp_set_default_device(0);
+            omp_target_memcpy(f_gpu0, f[0][0], size_half, 0, 0, 0, omp_get_initial_device());
+            omp_target_memcpy(u_gpu0, u[0][0], size_half, 0, 0, 0, omp_get_initial_device());
+
+            omp_set_default_device(1);
+            omp_target_memcpy(f_gpu1, f[N_half][0], size_half, 0, 0, 1, omp_get_initial_device());
+            omp_target_memcpy(u_gpu1, u[N_half][0], size_half, 0, 0, 1, omp_get_initial_device());
+
+            // Run Jacobi on both GPUs in parallel
+            #pragma omp parallel sections
+            {
+                #pragma omp section
+                jacobi_offload_dual(f_gpu0, u_gpu0, u_new_gpu0, N_half, iter_max, 0);
+
+                #pragma omp section
+                jacobi_offload_dual(f_gpu1, u_gpu1, u_new_gpu1, N_half, iter_max, 1);
+            }
+
+            
+            // Copy results back to CPU
+            omp_target_memcpy(u_new[0][0], u_new_gpu0, size_half, 0, 0, omp_get_initial_device(), 0);
+            omp_target_memcpy(u_new[N_half][0], u_new_gpu1, size_half, 0, 0, omp_get_initial_device(), 1);
+
+            break;
+
     double end_time = omp_get_wtime();
     printf("Jacobi Offload Execution Time: %.6f seconds\n", end_time - start_time);
 

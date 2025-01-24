@@ -12,6 +12,7 @@ extern "C"{
 
 int jacobi_offload(double ***, double ***, double ***, int, int);
 int jacobi_offload_dual(double *, double *, double *, int, int, int);
+int jacobi_offload_norm(double ***, double ***, double ***, int, int, double); 
 
 #ifdef __cplusplus
 }

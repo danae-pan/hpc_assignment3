@@ -12,6 +12,8 @@ extern "C"{
 
 int jacobi_parallel_opt(double ***, double ***, double ***, int, int);
 
+int jacobi_parallel_opt_norm(double ***, double ***, double ***, int, int, double, double*);
+
 #ifdef __cplusplus
 }
 #endif
